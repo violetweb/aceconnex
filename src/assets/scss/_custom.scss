@@ -12,3 +12,26 @@ $theme-colors: (
 
 );
 
+
+.owl-item {
+    position: relative;
+    min-height: 1px;
+    float: left;
+    -webkit-backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+
+blockquote {
+    font-size: 17px;
+    line-height: 31px;
+    display: block;
+    height: auto;
+    margin: 0 0 35px 25px;
+        margin-bottom: 35px;
+    margin-bottom: 35px;
+    top: 15px;
+    position: relative;
+    background: ('../images/textline.png') repeat-y;
+}

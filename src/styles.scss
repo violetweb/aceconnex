@@ -2,29 +2,29 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('http://customersurvey.acetronic.com/assets/css/xenon-core.css');
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 @import "./assets/scss/_custom.scss";
 @import "~bootstrap/scss/bootstrap.scss";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 
-
-
 body, html {
     height: 100%;
     margin: 0 auto;
+  
 }
 
 body {
     font-family: 'Montserrat';
-    font-size: 14px;
+    background: #131313;
+    color: #fff;
 }
 
 a {
     text-decoration: none;
 }
-.mat-drawer {
-    background-color: #333;
-}
+
 .mat-sidenav{
     min-width: 280px;
 }

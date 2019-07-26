@@ -6,12 +6,16 @@
                 <app-nav></app-nav>
         </mat-sidenav>
         <mat-sidenav-content>
-          
-                <div class="d-flex flex-column flex-md-row align-items-left p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-                      
-                        <button class="mr-md-auto" mat-button (click)="sidenav.toggle()"><i mat-icon *ngIf="!opened" class="material-icons">view_headline</i>
+             <div class="d-flex flex-row-reverse bg-dark p-3 border-bottom shadow-sm">
+                 
+                        <button mat-button (click)="sidenav.toggle()"><i mat-icon *ngIf="!opened" class="mr-sm-2 material-icons">view_headline</i>
                             <i mat-icon *ngIf="opened" class="material-icons">view_headline</i>
                         </button>
+                
+            </div>
+          <!-- TURNING OFF THE SIDE NAV STUFF FOR NOW WE DONT NEED IT ON THE ABOUT PAGE AT LEAST
+                <div class="d-flex flex-column flex-md-row align-items-left p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+                      
                         <nav class="my-2 my-md-0 mr-md-3 align-items-right">
                             <button mat-button><i mat-icon *ngIf="opened" class="material-icons">favorite</i></button>                               
                             <button mat-button><i mat-icon class="material-icons">notifications</i></button>
@@ -27,6 +31,7 @@
                         </nav>                       
                       
                  </div>
+                 -->
                  <router-outlet></router-outlet>  
       </mat-sidenav-content>
        

@@ -18,6 +18,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatInputModule, MatSortModule, MatFormFieldModule, MatTabsModule, MatTableModule, MatPaginatorModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+import { CarouselModule } from 'ngx-owl-carousel-o';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -32,10 +34,8 @@ import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { ProfileComponent } from './profile/profile.component';
-import { AttendeeComponent } from './attendee/attendee.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
-import { LeadComponent } from './lead/lead.component';
-import { InteractionsComponent } from './interactions/interactions.component';
+import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.component';
 
 
 @NgModule({
@@ -50,11 +50,10 @@ import { InteractionsComponent } from './interactions/interactions.component';
     LoginComponent,
     FooterComponent,
     HeaderComponent,
-    ProfileComponent,
-    AttendeeComponent,
-    SuppliersComponent,
-    LeadComponent,
-    InteractionsComponent
+    ProfileComponent,   
+    SuppliersComponent, ExhibitorPortalComponent,
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -82,7 +81,7 @@ import { InteractionsComponent } from './interactions/interactions.component';
     MatStepperModule,
     MatSelectModule,
     MatAutocompleteModule,
-   
+   CarouselModule,
   ],
   providers: [
     PopupService

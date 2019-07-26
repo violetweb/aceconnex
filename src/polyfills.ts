@@ -83,4 +83,5 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-import 'dymo/dymo.2.0.2.js'; // not sure if this works
+//import 'dymo/dymo.2.0.2.js'; // not sure if this works
+

@@ -7,9 +7,9 @@ import { ConnexComponent } from './connex/connex.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
-import { AttendeeComponent } from './attendee/attendee.component';
-import { LeadComponent } from './lead/lead.component';
-import { InteractionsComponent } from './interactions/interactions.component';
+
+
+import {ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.component';
 
 const routes: Routes = [
   { path: '',
@@ -29,17 +29,10 @@ const routes: Routes = [
       { path: 'profile',
         component: ProfileComponent
       },
-      { path: 'attendee',
-        component: AttendeeComponent
+     { path: 'exhibitor-portal',
+        component: ExhibitorPortalComponent
       },
-      {
-        path: 'lead',
-        component:  LeadComponent
-      },
-      {
-        path: 'interactions',
-        component:  InteractionsComponent
-      }
+     
 
     ]
   },
