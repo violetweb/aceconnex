@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
 
-    title = 'Acetronic Dashboard';
+    title = 'AceConnex 2010';
     currentUser: User;
 
     constructor(

@@ -7,36 +7,33 @@ import { ConnexComponent } from './connex/connex.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
-
-
-import {ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.component';
+import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.component';
 
 const routes: Routes = [
   { path: '',
-    component: DashboardComponent,
-    canActivate: [AuthGuard],
+    component: DashboardComponent,  
     children: [
       {
-        path: 'home',
-        component: HomeComponent
-      },
-      { path: 'about',
+        path: 'about',
         component: AboutComponent
       },
-      { path: 'aceconnex',
-        component: ConnexComponent
+      { path: 'exhibitor-portal',
+        canActivateChild: [AuthGuard],
+        component: ExhibitorPortalComponent,
+        children: [
+            {
+              path: 'profile',
+              component: ProfileComponent
+            },
+            {
+              path: 'connex',
+              component: ConnexComponent
+            },
+            { path: 'login', component: LoginComponent },
+          ],
+        }]
       },
-      { path: 'profile',
-        component: ProfileComponent
-      },
-     { path: 'exhibitor-portal',
-        component: ExhibitorPortalComponent
-      },
-     
-
-    ]
-  },
-  { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
 
 ];
 

@@ -2,7 +2,7 @@
  <header class="sidebar-header">
     <div class="row">
       <div class="logo col-md-auto">
-        <a [routerLink]="['']" class="logo-expanded" alt="Acetronic"><img width="100" src="assets/images/logoArtboard 1@0.5x.png" alt="AceTronic Logo"></a>
+        <a [routerLink]="['/about']" class="logo-expanded" alt="Acetronic"><img width="100" src="assets/images/logoArtboard 1@0.5x.png" alt="AceTronic Logo"></a>
       </div>
       <div class="abc">
          put other stuff in here... 
@@ -23,9 +23,9 @@
            
             <mat-divider></mat-divider>
           </li>
-          <li class="nav-item"
+          <li class="nav-item pt-4"
               [routerLinkActive]="['active']">
-             <a class="nav-link">ATTEND</a>
+             <a class="nav-link nav-link-head">ATTEND</a>
              <ul>
                <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/about']">Why Attend
@@ -51,9 +51,9 @@
              </ul>
            
           </li>
-          <li class="nav-item"
+          <li class="nav-item pt-4"
           [routerLinkActive]="['active']">
-          <a class="nav-link">EXHIBITORS</a>
+          <a class="nav-link nav-link-head">EXHIBITORS</a>
           <ul>
             <li class="nav-item">
               <a class="nav-link"
