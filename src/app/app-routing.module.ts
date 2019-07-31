@@ -25,7 +25,7 @@ const routes: Routes = [
         component: ExhibitorPortalComponent,
         canActivate: [AuthGuard],
         children: [
-          { path: 'exhibitor-portal/profile',
+          { path: 'profile',
             component: ProfileComponent
           },
         ]

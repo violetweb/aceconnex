@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
 
-    title = 'AceConnex 2010';
+    title = 'AceConnex Portal';
     currentUser: User;
 
     constructor(

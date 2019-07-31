@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { AuthenticationService } from '../authentication.service';
+import { ExhibitorNavComponent } from './exhibitor-portal/exhibitor-nav.component';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 

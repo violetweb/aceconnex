@@ -36,6 +36,7 @@ import { HeaderComponent } from './header/header.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.component';
+import { ExhibitorNavComponent } from './exhibitor-portal/exhibitor-nav.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.co
     HeaderComponent,
     ProfileComponent,   
     SuppliersComponent, 
-    ExhibitorPortalComponent,
+    ExhibitorPortalComponent, 
+    ExhibitorNavComponent,
     
     
   ],
