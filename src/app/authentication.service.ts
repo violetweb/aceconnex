@@ -21,9 +21,11 @@ export class AuthenticationService {
   token: string;
 
   constructor(private http: HttpClient) {
-      this.currentUserSubject = new BehaviorSubject<any>(JSON.stringify(localStorage.getItem('currentUser')));
-      this.currentUser = this.currentUserSubject.asObservable();
-      //currentUser is actually a "token";
+
+        this.currentUserSubject = new BehaviorSubject<any>(localStorage.getItem('currentUser'));
+        this.currentUser = this.currentUserSubject.asObservable();
+
+
   }
 
   public get currentUserValue(): User {
@@ -36,6 +38,8 @@ export class AuthenticationService {
       this.token = localStorage.getItem('currentUser');
     }
     return this.token;
+
+
   }
 
 
@@ -73,7 +77,7 @@ export class AuthenticationService {
                 //localStorage.setItem('client_id', client_id);
                // localStorage.setItem('client_secret', client_secret);
                 this.currentUserSubject.next(data);
-                console.log(data);
+               
             }
 
             return data;

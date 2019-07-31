@@ -51,7 +51,8 @@ import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.co
     FooterComponent,
     HeaderComponent,
     ProfileComponent,   
-    SuppliersComponent, ExhibitorPortalComponent,
+    SuppliersComponent, 
+    ExhibitorPortalComponent,
     
     
   ],

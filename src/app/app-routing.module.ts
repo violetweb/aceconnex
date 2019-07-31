@@ -10,35 +10,34 @@ import { ProfileComponent } from './profile/profile.component';
 import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.component';
 
 const routes: Routes = [
-  { path: '',
-    component: DashboardComponent,  
+  {
+    path: '',
+    component: DashboardComponent,
     children: [
       {
         path: 'about',
         component: AboutComponent
       },
-      { path: 'exhibitor-portal',
-        canActivateChild: [AuthGuard],
-        component: ExhibitorPortalComponent,
-        children: [
-            {
-              path: 'profile',
-              component: ProfileComponent
-            },
-            {
-              path: 'connex',
-              component: ConnexComponent
-            },
-            { path: 'login', component: LoginComponent },
-          ],
-        }]
+      { path: 'login', 
+        component: LoginComponent 
       },
-      { path: 'login', component: LoginComponent },
-
+      { path: 'exhibitor-portal',
+        component: ExhibitorPortalComponent,
+        canActivate: [AuthGuard],
+        children: [
+          { path: 'exhibitor-portal/profile',
+            component: ProfileComponent
+          },
+        ]
+      },
+    ]
+  },
+  
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

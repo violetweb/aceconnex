@@ -31,8 +31,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.opened = true;
-    this.loggedIn = (this.authenticationService.currentUser) ? true : false;  
-   
+   // this.loggedIn = (this.authenticationService.currentUserSubject.value) ? true : false;
   }
 
   onPositionChanged() {
