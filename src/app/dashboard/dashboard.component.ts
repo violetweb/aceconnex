@@ -38,11 +38,7 @@ export class DashboardComponent implements OnInit {
     this.opened = !this.opened;
   }
 
-  logOff() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
-
-  }
+ 
   goProfile(){
     this.router.navigate(['/profile']);
   }

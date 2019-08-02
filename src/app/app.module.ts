@@ -37,7 +37,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.component';
 import { ExhibitorNavComponent } from './exhibitor-portal/exhibitor-nav.component';
-
+import { MatFileUploadModule } from 'angular-material-fileupload';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,7 @@ import { ExhibitorNavComponent } from './exhibitor-portal/exhibitor-nav.componen
     ChartsModule,
     MatSidenavModule,
     MatCheckboxModule,
-    MatButtonModule,
+   MatFileUploadModule,
     MatIconModule,
     MatMenuModule,
     MatListModule,
@@ -81,6 +81,7 @@ import { ExhibitorNavComponent } from './exhibitor-portal/exhibitor-nav.componen
     MatPaginatorModule,
     MatTableModule,
     MatButtonToggleModule,
+    MatButtonModule,
     MatStepperModule,
     MatSelectModule,
     MatAutocompleteModule,
@@ -112,7 +113,7 @@ import { ExhibitorNavComponent } from './exhibitor-portal/exhibitor-nav.componen
     MatStepperModule,
     MatSelectModule,
     MatAutocompleteModule,
-    
+    MatFileUploadModule    
     ]
 })
 export class AppModule { }

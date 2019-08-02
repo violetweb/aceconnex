@@ -1,6 +1,107 @@
 
 <!-- SUB NAVIGATION WITHIN THIS SECTION-->
 <app-enav></app-enav>
- this is a test -- should be bypassed to the login page.
- <router-outlet></router-outlet>
+<mat-tab-group>
+  <mat-tab label="Company">
+        <label *ngIf="!published">UNPUBLISHED</label><button *ngIf="!published" class="material-icons" mat-button (click)="onPublish()">PUBLISH</button>
+        <button *ngIf="published" class="material-icons" mat-button>PUBLISHED</button>
+     
+   
+      <mat-card>
+      
+        <mat-card-title>Company Info</mat-card-title>
+        <mat-card-subtitle>subititle</mat-card-subtitle>
+        <mat-card-content>   
+            Logo stuff on this side.
+           <label for="singleFile">Upload file</label>
+<input id="singleFile" type="file"  [fileUploadInputFor]= "fileUploadQueue"/>
+<br>
+
+ <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+              <label for="company">Company name</label>
+              <input type="text" formControlName="company" placeholder="ABC Corporation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.company.errors }" />
+              <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
+                  <div *ngIf="f.company.errors.required">Company is required</div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" formControlName="streetaddress" placeholder="Street Address 1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.streetaddress.errors }" />
+              <div *ngIf="submitted && f.streetaddress.errors" class="invalid-feedback">
+                  <div *ngIf="f.streetaddress.errors.required">Street Address is required</div>
+              </div>
+          </div>
+           <div class="form-group">
+              <label for="address">Address 2</label>
+              <input type="text" formControlName="unit" placeholder="Street Address 2" class="form-control" />
+          </div>
+       
+          <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" formControlName="city" placeholder="ABC Corporation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
+              <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                  <div *ngIf="f.city.errors.required">City is required</div>
+              </div>
+          </div>
+            <div class="form-group">
+              <label for="prov">Prov</label>
+              <input type="text" formControlName="prov" placeholder="ABC Corporation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.prov.errors }" />
+              <div *ngIf="submitted && f.prov.errors" class="invalid-feedback">
+                  <div *ngIf="f.prov.errors.required">City is required</div>
+              </div>
+          </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" formControlName="postal" placeholder="ABC Corporation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.postal.errors }" />
+              <div *ngIf="submitted && f.postal.errors" class="invalid-feedback">
+                  <div *ngIf="f.postal.errors.required">City is required</div>
+              </div>
+          </div>
+       
+       
+          <div class="form-group">
+              <button [disabled]="loading" class="btn btn-primary btn-lg btn-block">Submit</button>
+              <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </div>
+          <div class="form-group border-top">              
+             <p class="text-right pt-2">If you would like to exhit, please visit this page :...Haven't got an account?&nbsp;&nbsp;<a [routerLink]="['/register']" class="btn-link">Register</a></p>
+          </div>
+      </form>
+   
+<mat-file-upload-queue #fileUploadQueue
+    [fileAlias]="'file'"
+    [httpUrl]="'http://localhost:4200/'">
+
+    <mat-file-upload [file]="file"   [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
+</mat-file-upload-queue>
+        <button mat-button (complete)="onFileComplete($event)" >Upload Logo!</button>
+          
+                <div class="col-md-6">
+                          address line 1 <br/>
+          address line 2 <br/>
+          address line 3 <br/>
+
+          phone 1 <br/>
+          phone 2 <br/>
+          phone 3 <br/>
+                </div>
+
+    </mat-card-content>
+     
+     
+       
+      </mat-card>
+      <div class="col-md-6">
+    
+     </div>
+  </mat-tab>
+  <mat-tab label="Venue">Venue</mat-tab>
+  <mat-tab label="Attendees">Attendees</mat-tab>
+  <mat-tab label="Marketing">Marketing</mat-tab>
+</mat-tab-group>
+
+
+ 
+ 
 
