@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class ExhibitorNavComponent implements OnInit {
 
-  constructor(  
-    private authenticationService: AuthenticationService,    
+  constructor(
+    private authenticationService: AuthenticationService,
     private router: Router
     ) { }
 

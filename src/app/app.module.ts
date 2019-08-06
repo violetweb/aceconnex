@@ -86,6 +86,7 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     MatSelectModule,
     MatAutocompleteModule,
    CarouselModule,
+    
   ],
   providers: [
     PopupService
@@ -113,7 +114,8 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     MatStepperModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatFileUploadModule    
+    MatFileUploadModule,
+   
     ]
 })
 export class AppModule { }

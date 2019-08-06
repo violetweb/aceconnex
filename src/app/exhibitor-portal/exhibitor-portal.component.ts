@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '
 import { ProfileComponent } from '../profile/profile.component';
 import { MatTab } from '@angular/material';
 import { MatButton } from '@angular/material/button'; 
-//import { MatFileUpload } from 'angular-material-fileupload';
+import { MatFileUploadQueue } from 'angular-material-fileupload';
 
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -26,20 +26,20 @@ export class ExhibitorPortalComponent implements OnInit {
   opened: boolean;
   published: boolean = false;
   companyForm: FormGroup;
+  contactsForm: FormGroup;
   loading: boolean = false;
-
-  files: Array<any> = [];
+  logoIsSet: boolean = false;
+  logosrc: string;
+  contactsexist: boolean = false;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
-   // private fu: MatFileUpload
 ) {
 }
   ngOnInit() {
-   
-    
+
     this.loggedIn = (this.authenticationService.currentUserSubject.value) ? true : false;
     this.companyForm = this.formBuilder.group({
       company: ['', [Validators.required, Validators.minLength(2)]],
@@ -48,26 +48,43 @@ export class ExhibitorPortalComponent implements OnInit {
       city: ['', [Validators.required, Validators.minLength(2)]],
       prov: ['', [Validators.required, Validators.minLength(2)]],
       postal: ['', [Validators.required, Validators.minLength(2)]],
-      
+      phone1: ['', [Validators.required, Validators.minLength(9)]],
+      phone2: [''],
+      phone3: [''],
     });
- 
+    this.contactsForm = this.formBuilder.group({
+      contactname: ['', [Validators.required, Validators.minLength(2)]],
+      title: ['', [Validators.required, Validators.minLength(5)]],
+      email: ['', [Validators.required, Validators.minLength(10)]],
+      phone: [''],
+      ext: [''],
+    });
+
+    //Add -- load contacts, company info... turn off or on any "existance elements";
 }
 
-onFileComplete(data: any) {
-      console.log(data); // We just print out data bubbled up from event emitter.
-}
-onPublish(){
+ // Coming from any file uploads
+  onFileComplete(data: any) {
+    //Grab the logo name.
+    //Show the image
+    //Save the image name
+    this.logoIsSet = true;
+    this.logosrc = data['file']['name'];
 
-  this.published = true;
-  console.log("publish this");
-}
+  }
+  onPublish(){
+
+    this.published = true;
+   
+  }
 
 
   // convenience getter for easy access to form fields
-    get f() { return this.companyForm.controls;}
+    get f() { return this.companyForm.controls; }
 
 
-  onSubmit() {
+
+    onSubmit() {
 
     //  this.submitted = true;
 

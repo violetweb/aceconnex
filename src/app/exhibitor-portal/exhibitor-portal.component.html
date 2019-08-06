@@ -12,11 +12,22 @@
         <mat-card-title>Company Info</mat-card-title>
         <mat-card-subtitle>subititle</mat-card-subtitle>
         <mat-card-content>   
-            Logo stuff on this side.
-           <label for="singleFile">Upload file</label>
-<input id="singleFile" type="file"  [fileUploadInputFor]= "fileUploadQueue"/>
-<br>
-
+            <div class="row">
+            <div class="col-md-3">
+               
+               <img *ngIf="logoIsSet" src="http://localhost:4200/images/uploads/{{logosrc}}" alt="company-logo">
+               <div *ngIf="!logoIsSet">
+                            <label for="singleFile">Upload file</label>
+                                <input id="singleFile" type="file"  [fileUploadInputFor]= "fileUploadQueue"/>
+                                <br>
+                            <mat-file-upload-queue #fileUploadQueue
+                                [fileAlias]="'file'"
+                                    [httpUrl]="'http://localhost:4200/uploads'" >
+                            <mat-file-upload  (onUpload)="onFileComplete($event)" [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
+                            </mat-file-upload-queue>
+                </div>
+        </div>
+        <div class="col-md-9">  
  <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
               <label for="company">Company name</label>
@@ -25,41 +36,61 @@
                   <div *ngIf="f.company.errors.required">Company is required</div>
               </div>
           </div>
-          <div class="form-group">
+          <div class="row">
+          <div class="form-group col-md-6">
               <label for="address">Address</label>
               <input type="text" formControlName="streetaddress" placeholder="Street Address 1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.streetaddress.errors }" />
               <div *ngIf="submitted && f.streetaddress.errors" class="invalid-feedback">
                   <div *ngIf="f.streetaddress.errors.required">Street Address is required</div>
               </div>
           </div>
-           <div class="form-group">
+           <div class="form-group col-md-6">
               <label for="address">Address 2</label>
               <input type="text" formControlName="unit" placeholder="Street Address 2" class="form-control" />
           </div>
-       
-          <div class="form-group">
+        </div>
+        <div class="row">
+          <div class="form-group col-md-5">
               <label for="city">City</label>
               <input type="text" formControlName="city" placeholder="ABC Corporation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
               <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
                   <div *ngIf="f.city.errors.required">City is required</div>
               </div>
           </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
               <label for="prov">Prov</label>
               <input type="text" formControlName="prov" placeholder="ABC Corporation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.prov.errors }" />
               <div *ngIf="submitted && f.prov.errors" class="invalid-feedback">
                   <div *ngIf="f.prov.errors.required">City is required</div>
               </div>
           </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
               <label for="city">City</label>
               <input type="text" formControlName="postal" placeholder="ABC Corporation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.postal.errors }" />
               <div *ngIf="submitted && f.postal.errors" class="invalid-feedback">
                   <div *ngIf="f.postal.errors.required">City is required</div>
               </div>
           </div>
+        </div>
        
-       
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="phone1">Main Phone</label>
+                <input type="text" formControlName="phone1" placeholder="Phone 1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone1.errors }" />
+                <div *ngIf="submitted && f.phone1.errors" class="invalid-feedback">
+                        <div *ngIf="f.phone1.errors.required">Phone is required</div>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                    <label for="phone2">Mobile / Direct Phone</label>
+                    <input type="text" formControlName="phone2" placeholder="Phone 2" class="form-control" />
+                </div>
+                <div class="form-group col-md-4">
+                        <label for="phone3">Main Phone</label>
+                        <input type="text" formControlName="phone3" placeholder="Phone 3" class="form-control"/>
+                        
+                    </div>
+        </div>
           <div class="form-group">
               <button [disabled]="loading" class="btn btn-primary btn-lg btn-block">Submit</button>
               <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
@@ -68,25 +99,46 @@
              <p class="text-right pt-2">If you would like to exhit, please visit this page :...Haven't got an account?&nbsp;&nbsp;<a [routerLink]="['/register']" class="btn-link">Register</a></p>
           </div>
       </form>
-   
-<mat-file-upload-queue #fileUploadQueue
-    [fileAlias]="'file'"
-    [httpUrl]="'http://localhost:4200/'">
-
-    <mat-file-upload [file]="file"   [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
-</mat-file-upload-queue>
-        <button mat-button (complete)="onFileComplete($event)" >Upload Logo!</button>
-          
-                <div class="col-md-6">
-                          address line 1 <br/>
-          address line 2 <br/>
-          address line 3 <br/>
-
-          phone 1 <br/>
-          phone 2 <br/>
-          phone 3 <br/>
+    </div>
+          </div>
+<div *ngIf="contactsexist" class="row">
+    Contacts Section
+ <form [formGroup]="contactsForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="contactname">Contact Name</label>
+            <input type="text" formControlName="contactname" placeholder="Contact Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.company.errors }" />
+            <div *ngIf="submitted && f.contactname.errors" class="invalid-feedback">
+                <div *ngIf="f.company.errors.required">Contact Name is required</div>
+            </div>
+        </div>
+        <div class="row">
+        <div class="form-group col-md-6">
+            <label for="title">Title</label>
+            <input type="text" formControlName="title" placeholder="Title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" />
+            <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                <div *ngIf="f.title.errors.required">Title is required</div>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+                <label for="phone">Phone</label>
+                <input type="text" formControlName="phone" placeholder="Phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+                <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                    <div *ngIf="f.phone.errors.required">Phone is required</div>
                 </div>
-
+            </div>
+            <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <input type="text" formControlName="email" placeholder="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">Email is required</div>
+                    </div>
+                </div>
+    </div>
+    </form>
+</div>
+<div class="row">
+    <textarea name="about"></textarea>
+</div>
     </mat-card-content>
      
      
