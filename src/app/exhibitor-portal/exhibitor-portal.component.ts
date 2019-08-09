@@ -36,7 +36,7 @@ export class ExhibitorPortalComponent implements OnInit {
   logosrc = '';
   contactsexist: boolean = false;
   submitted: boolean = false;
-  exhibitorid = null;
+  exhibitorid;
   exhibitorData: [];
   panelOpenState = true;
   contactsData: [];
@@ -91,8 +91,8 @@ export class ExhibitorPortalComponent implements OnInit {
         });
 
       this.panelOpenState = true;
-
-      this.exhibitorService.getContactsById('2').
+      this.exhibitorid = '2'; // replace this with a lookup of the exhibitor id... or get from login info.
+      this.exhibitorService.getContactsById(this.exhibitorid).
       pipe(first())
       .subscribe(
         data => {
@@ -165,7 +165,7 @@ export class ExhibitorPortalComponent implements OnInit {
         }
         //contactname, title, email, phone, ext, contacttype
         this.loading = true;
-        this.exhibitorService.insertContact(this.c.contactname.value, this.c.title.value, this.c.email.value, 
+        this.exhibitorService.insertContact(this.exhibitorid, this.c.contactname.value, this.c.title.value, this.c.email.value, 
           this.c.phone.value, this.c.ext.value, this.c.contacttype.value)
               .pipe(first())
               .subscribe(

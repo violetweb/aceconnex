@@ -22,11 +22,11 @@ export class ExhibitorService {
   }
 
   getContactsById(id: string){
-    return this.http.get<Exhibitorcontact[]>(this.url + '/exhibitors/getContacts?id=' + id);
+    return this.http.get<Exhibitorcontact[]>(this.url + '/exhibitors/getcontacts?id=' + id);
   }
 
-  insertContact(contactname, title, email, phone, ext, contacttype) {
-    return this.http.post(this.url + '/exhibitors/insertcontact', {contactname, title, email, phone, ext, contacttype });
+  insertContact(exhibitorid, contactname, title, email, phone, ext, contacttype) {
+    return this.http.post(this.url + '/exhibitors/insertcontact', {exhibitorid, contactname, title, email, phone, ext, contacttype });
   }
 
   insert(company, logosrc, address1, address2, city, prov, postal, phone1, phone2, phone3, companyabout) {
