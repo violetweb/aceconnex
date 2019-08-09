@@ -22,7 +22,7 @@ export class ExhibitorService {
   }
 
   getContactsById(id: string){
-    return this.http.get<Exhibitorcontact[]>(this.url + '/exhibitors/getcontacts?id=' + id);
+    return this.http.get<Exhibitorcontact[]>(this.url + '/exhibitors/getContacts?id=' + id);
   }
 
   insertContact(exhibitorid, contactname, title, email, phone, ext, contacttype) {
