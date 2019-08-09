@@ -15,7 +15,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
-import { MatInputModule, MatSortModule, MatFormFieldModule, MatTabsModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+import { MatInputModule, MatSortModule, MatFormFieldModule, MatTabsModule, MatTableModule, MatPaginatorModule, MatExpansionModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -85,6 +85,7 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     MatStepperModule,
     MatSelectModule,
     MatAutocompleteModule,
+    MatExpansionModule,
    CarouselModule,
     
   ],
@@ -115,6 +116,7 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     MatSelectModule,
     MatAutocompleteModule,
     MatFileUploadModule,
+    MatExpansionModule
    
     ]
 })

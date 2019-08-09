@@ -34,7 +34,7 @@ export class ConnexComponent implements OnInit {
 
 
   ngOnInit() {
-    this.data.getConnexRegistrants().subscribe(data => {
+      this.data.getConnexRegistrants().subscribe(data => {
       this.dataSource = data['data'].slice();
       this.totalRegistered = this.dataSource.reduce((sum: number, current: { no_guests: number; }) => sum + Number(current.no_guests), 0);
       this.totalLunch = this.dataSource.reduce((sum: number, current: { no_guests: number; lunch: number; }) => sum + Number(current.no_guests*current.lunch), 0);
