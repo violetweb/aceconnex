@@ -7,13 +7,14 @@ import { AlertService } from '../alert.service';
 import { ExhibitorNavComponent } from './exhibitor-nav.component';
 import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 //import { ProfileComponent } from '../profile/profile.component';
-import { MatTab, MatExpansionPanel  } from '@angular/material';
+import { MatTab, MatExpansionPanel, MatTableDataSource  } from '@angular/material';
 import { MatButton } from '@angular/material/button'; 
 import { MatFileUploadQueue } from 'angular-material-fileupload';
-import { first } from 'rxjs/operators';
+import { first, share } from 'rxjs/operators';
 import { Subscription  } from 'rxjs';
 import { Router } from '@angular/router';
 import { Exhibitor } from '../exhibitor';
+import { Exhibitorcontact } from '../exhibitorcontact';
 
 
 @Component({
@@ -24,6 +25,7 @@ import { Exhibitor } from '../exhibitor';
 })
 export class ExhibitorPortalComponent implements OnInit {
 
+  displayedColumns = ['id', 'exhibitorid', 'contactname', 'email', 'title', 'phone', 'ext', 'contacttype'];
   loggedIn: boolean = false;
   currentUser: User;
   currentUserSubscription: Subscription;
@@ -31,16 +33,19 @@ export class ExhibitorPortalComponent implements OnInit {
   published: boolean = false;
   companyForm: FormGroup;
   contactsForm: FormGroup;
+  saveContactForm: FormGroup;
   loading: boolean = false;
   logoIsSet: boolean = false;
   logosrc = '';
   contactsexist: boolean = false;
+  contactedit: boolean = false;
   submitted: boolean = false;
   exhibitorid;
   exhibitorData: [];
   panelOpenState = true;
-  contactsData: [];
+  contactsData;
   addcontact: boolean = false;
+  exhibitorEdit: boolean = false;
 
   constructor(
     private router: Router,
@@ -77,6 +82,9 @@ export class ExhibitorPortalComponent implements OnInit {
       contacttype: ['']
     });
 
+
+    this.exhibitorid = '2'; // replace this with a lookup of the exhibitor id... or get from login info.
+
     //Grab the exhibitor id, if user is logged in.
     this.exhibitorService.getById('2').
     pipe(first())
@@ -91,14 +99,15 @@ export class ExhibitorPortalComponent implements OnInit {
         });
 
       this.panelOpenState = true;
-      this.exhibitorid = '2'; // replace this with a lookup of the exhibitor id... or get from login info.
+
       this.exhibitorService.getContactsById(this.exhibitorid).
       pipe(first())
       .subscribe(
         data => {
-          this.contactsData = data['data'].slice();
-          if (this.contactsData.length < 1) {
-            this.contactsexist = false;
+          const ELEMENT_DATA: Exhibitorcontact[] = data['data'].slice();
+          this.contactsData = new MatTableDataSource(ELEMENT_DATA);
+          if (this.contactsData) {
+            this.contactsexist = true;
           }
        },
         error => {
@@ -106,6 +115,13 @@ export class ExhibitorPortalComponent implements OnInit {
             this.loading = false;
       });
 }
+
+  updateContact(element){
+
+
+    this.exhibitorService.updateContact(element).subscribe(data => this.exhibitorData = data["data"].slice());
+
+  }
 
  // Coming from any file uploads
   onFileComplete(data: any) {
@@ -116,7 +132,7 @@ export class ExhibitorPortalComponent implements OnInit {
     this.logosrc = data['file']['name'];
 
   }
-  onPublish(){
+  onPublish() {
 
     this.published = true;
 
@@ -126,6 +142,9 @@ export class ExhibitorPortalComponent implements OnInit {
     this.addcontact = true;
   }
 
+  onExhibitorEdit(){
+    this.exhibitorEdit = true;
+  }
   // convenience getter for easy access to form fields
     get f() { return this.companyForm.controls; }
     get c() { return this.contactsForm.controls; }
@@ -147,12 +166,34 @@ export class ExhibitorPortalComponent implements OnInit {
               .subscribe(
                   data => {
                     this.loading = false;
-                    console.log(data);
+                    //Turn off the add contact form.
+                    this.addcontact = false;
                  },
                   error => {
                       this.alertService.error(error);
                       this.loading = false;
                   });
+
+    }
+
+    onEditContact(id) {
+      this.contactedit = true;
+    }
+
+
+    onSaveContact(id) {
+      this.exhibitorService.saveContact(this.exhibitorid, this.c.contactname.value, this.c.title.value, this.c.email.value, 
+        this.c.phone.value, this.c.ext.value, this.c.contacttype.value)
+            .pipe(first())
+            .subscribe(
+                data => {
+                  this.loading = false;
+                  console.log(data);
+               },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
 
     }
 
@@ -163,7 +204,7 @@ export class ExhibitorPortalComponent implements OnInit {
         if (this.contactsForm.invalid) {
             return;
         }
-        //contactname, title, email, phone, ext, contacttype
+
         this.loading = true;
         this.exhibitorService.insertContact(this.exhibitorid, this.c.contactname.value, this.c.title.value, this.c.email.value, 
           this.c.phone.value, this.c.ext.value, this.c.contacttype.value)

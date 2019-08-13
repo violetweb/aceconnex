@@ -39,6 +39,7 @@
                 </div>
                 <div class="col-md-6 col-md-offset-1">  
                     <div *ngIf="exhibitorData">
+                       
                         <div *ngFor="let item of exhibitorData;">
                         <mat-card class="co_address" >
                                                             
@@ -159,18 +160,132 @@
                     <mat-card>
                         <mat-card-title>Contacts</mat-card-title>
                         <mat-card-content>
-                                <button mat-button (ngClick)="onAddContact()">Add Contact</button>
+                                <button mat-button (click)="onAddContact()">Add Contact</button>
 <p>Need to add an editable row here</p>
-                            <table *ngIf="contactsexist">
+<div *ngIf="contactsexist" >
+                   
+        <mat-table #table [dataSource]="contactsData">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef> Id. </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="exhibitorid">
+                        <mat-header-cell *matHeaderCellDef> Exhibitor Id. </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.exhibitorid}} </mat-cell>
+                </ng-container>
+            
+                <!-- Name Column -->
+                <ng-container matColumnDef="contactname">
+                    <mat-header-cell *matHeaderCellDef> Contact Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <input matInput (change)="updateContact(element)" placeholder="Contact Name" [value]="element.contactname" [(ngModel)]="element.contactname">
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+        
+                <!-- Weight Column -->
+                <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                    <mat-form-field floatLabel="never">
+                            <input matInput (change)="updateContact(element)" placeholder="Title" [value]="element.title" [(ngModel)]="element.title">
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+        
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                    
+                    <mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <input matInput (change)="updateContact(element)" placeholder="Email" [value]="element.email" [(ngModel)]="element.email">
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+        
+                <!-- Fav Column -->
+                <ng-container matColumnDef="phone">
+                    <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <input matInput (change)="updateContact(element)"  placeholder="Phone" [value]="element.phone" [(ngModel)]="element.phone">
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="ext">
+                        <mat-header-cell *matHeaderCellDef> Ext </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <mat-form-field floatLabel="never">
+                                <input matInput (change)="updateContact(element)" placeholder="Ext" [value]="element.ext" [(ngModel)]="element.ext">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                       <!-- Symbol Column -->
+                  <ng-container matColumnDef="contacttype">
+                        <mat-header-cell *matHeaderCellDef> Contact Type </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <mat-form-field floatLabel="never">
+                                <input matInput (change)="updateContact(element)" placeholder="Type" [value]="element.contacttype" [(ngModel)]="element.contacttype">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+        
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+       
+
+<!-- TURN OFF
+                            <table class="table table-condensed">
+
+                               
                                 <tr *ngFor="let c of contactsData;">
-                                    <td>{{c.contactname}} {{c.title}}</td>
-                                    <td>{{c.email}}</td>
-                                    <td>{{c.phone}}  {{c.ext}}</td>
-                                                                        
+                                    <td>
+                                        <div *ngIf="contactedit">
+                                            <input [required]="required" [name]="contactname" [(ngModel)]="c.contactname" />
+                                            <input [required]="required" [name]="title" [(ngModel)]="c.title" />
+                                        </div>
+                                        <div *ngIf="!contactedit">
+                                            {{c.contactname}} {{c.title}}
+                                        </div></td>
+                                    <td><div *ngIf="contactedit">
+                                            <input [required]="required" [name]="email" [(ngModel)]="c.email" [placeholder]="label" />
+                                        </div>
+                                        <div *ngIf="!contactedit">
+                                                {{c.email}}
+                                        </div></td>
+                                    <td>
+                                        <div *ngIf="contactedit">
+                                                <input [required]="required" [name]="phone" [(ngModel)]="c.phone" />
+                                                <input [required]="required" [name]="ext" [(ngModel)]="c.ext" />
+                                        </div>
+                                        <div *ngIf="!contactedit">
+                                        {{c.phone}}  {{c.ext}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div *ngIf="contactedit">
+                                            <button mat-button (click)="onSaveContact(c.id)">submit</button>
+                                        </div>
+                                        <div *ngIf="!contactedit">
+                                        <button mat-button (click)="onEditContact(c.id)">edit</button>
+                                        </div>
+                                    </td>
+
                                 </tr>
                             </table>
+                      -->
+                            </div>
+                        
                             <!-- IF EXISTS : mat panel content : contacts section -->
-                            <div *ngIf="!contactsexist || addcontact == true">
+                            <div *ngIf="!contactsexist || addcontact">
                                      
                                     <form [formGroup]="contactsForm" (ngSubmit)="onContactsSubmit()">
                                         <div class="row">
