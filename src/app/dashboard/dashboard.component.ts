@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatSidenavModule, MatMenuModule } from '@angular/material';
 import { User } from '../user';
 import { AuthenticationService } from '../authentication.service';
@@ -12,10 +12,13 @@ import { Router } from '@angular/router';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
 export class DashboardComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MatSidenavModule;
   @ViewChild('menu') menu: MatMenuModule;
+
+  @Output() windowopened = new EventEmitter<boolean>();
 
   loggedIn = true;
   currentUser: User;
@@ -35,11 +38,12 @@ export class DashboardComponent implements OnInit {
   }
 
   onPositionChanged() {
+    
     this.opened = !this.opened;
+    this.windowopened.emit(this.opened);
   }
 
- 
-  goProfile(){
+  goProfile() {
     this.router.navigate(['/profile']);
   }
 }

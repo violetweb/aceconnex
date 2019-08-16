@@ -23,15 +23,15 @@
                         <mat-card>
                             <mat-card-title>Company Logo</mat-card-title>
                             <mat-card-subtitle>Upload logo</mat-card-subtitle>
-                            <img mat-card-avatar *ngIf="logoIsSet" src="http://localhost:4200/images/uploads/{{logosrc}}" alt="company-logo">
+                            <img mat-card-avatar *ngIf="logoIsSet" src="" alt="company-logo">
                             <div *ngIf="!logoIsSet">
                                 <label for="singleFile">Upload file</label>
                                 <input id="singleFile" type="file"  [fileUploadInputFor]= "fileUploadQueue"/>
                                 
                                 <mat-file-upload-queue #fileUploadQueue
                                     [fileAlias]="'file'"
-                                        [httpUrl]="'http://localhost:4200/uploads'" >
-                                <mat-file-upload  (onUpload)="onFileComplete($event)" [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
+                                        [httpUrl]="'http://api.acetronic.com/upload'" >
+                                <mat-file-upload (onUpload)="onFileComplete($event)" [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
                                 </mat-file-upload-queue>
                             </div>                                            
                         </mat-card>
@@ -169,13 +169,15 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef> Id. </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.id}} 
+                        <button mat-button (click)="deleteContact(element.id)">delete</button>
+                    </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="exhibitorid">
+             <!--   <ng-container matColumnDef="exhibitorid">
                         <mat-header-cell *matHeaderCellDef> Exhibitor Id. </mat-header-cell>
                         <mat-cell *matCellDef="let element"> {{element.exhibitorid}} </mat-cell>
                 </ng-container>
-            
+            -->
                 <!-- Name Column -->
                 <ng-container matColumnDef="contactname">
                     <mat-header-cell *matHeaderCellDef> Contact Name </mat-header-cell>
@@ -236,6 +238,8 @@
                             </mat-form-field>
                         </mat-cell>
                     </ng-container>
+                             <!-- Symbol Column -->
+          
         
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

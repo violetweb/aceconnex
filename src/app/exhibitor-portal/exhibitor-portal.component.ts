@@ -15,6 +15,7 @@ import { Subscription  } from 'rxjs';
 import { Router } from '@angular/router';
 import { Exhibitor } from '../exhibitor';
 import { Exhibitorcontact } from '../exhibitorcontact';
+import { UploadService } from '../upload.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ import { Exhibitorcontact } from '../exhibitorcontact';
 })
 export class ExhibitorPortalComponent implements OnInit {
 
-  displayedColumns = ['id', 'exhibitorid', 'contactname', 'email', 'title', 'phone', 'ext', 'contacttype'];
+  displayedColumns = ['id', 'contactname', 'email', 'title', 'phone', 'ext', 'contacttype'];
   loggedIn: boolean = false;
   currentUser: User;
   currentUserSubscription: Subscription;
@@ -52,7 +53,8 @@ export class ExhibitorPortalComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private exhibitorService: ExhibitorService,
     private formBuilder: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private uploadService: UploadService
 ) {
 }
   ngOnInit() {
@@ -91,7 +93,6 @@ export class ExhibitorPortalComponent implements OnInit {
     .subscribe(
         data => {
           this.exhibitorData = data['data'].slice();
-          console.log(this.exhibitorData);
        },
         error => {
             this.alertService.error(error);
@@ -99,39 +100,45 @@ export class ExhibitorPortalComponent implements OnInit {
         });
 
       this.panelOpenState = true;
-
-      this.exhibitorService.getContactsById(this.exhibitorid).
-      pipe(first())
-      .subscribe(
-        data => {
-          const ELEMENT_DATA: Exhibitorcontact[] = data['data'].slice();
-          this.contactsData = new MatTableDataSource(ELEMENT_DATA);
-          if (this.contactsData) {
-            this.contactsexist = true;
-          }
-       },
-        error => {
-            this.alertService.error(error);
-            this.loading = false;
-      });
+      this.getContacts();
 }
 
-  updateContact(element){
+  getContacts() {
+    this.exhibitorService.getContactsById(this.exhibitorid).
+    pipe(first())
+    .subscribe(
+      data => {
+        const ELEMENT_DATA: Exhibitorcontact[] = data['data'].slice();
+        this.contactsData = new MatTableDataSource(ELEMENT_DATA);
+        if (this.contactsData) {
+          this.contactsexist = true;
+        }
+     },
+      error => {
+          this.alertService.error(error);
+          this.loading = false;
+    });
+  }
 
+  updateContact(element) {
+    this.exhibitorService.updateContact(element).subscribe(data => this.contactsData = this.getContacts());
+  }
 
-    this.exhibitorService.updateContact(element).subscribe(data => this.exhibitorData = data["data"].slice());
+  deleteContact(id){
+    this.exhibitorService.deleteContact(id).subscribe(
+      data => this.contactsData = this.getContacts());
 
   }
 
  // Coming from any file uploads
   onFileComplete(data: any) {
-    //Grab the logo name.
-    //Show the image
-    //Save the image name
+
     this.logoIsSet = true;
-    this.logosrc = data['file']['name'];
+    console.log(data);
+    this.logosrc = data['file']['name']; // save the image name.
 
   }
+ 
   onPublish() {
 
     this.published = true;
@@ -140,6 +147,7 @@ export class ExhibitorPortalComponent implements OnInit {
 
   onAddContact() {
     this.addcontact = true;
+
   }
 
   onExhibitorEdit(){
@@ -166,8 +174,7 @@ export class ExhibitorPortalComponent implements OnInit {
               .subscribe(
                   data => {
                     this.loading = false;
-                    //Turn off the add contact form.
-                    this.addcontact = false;
+
                  },
                   error => {
                       this.alertService.error(error);
@@ -188,7 +195,8 @@ export class ExhibitorPortalComponent implements OnInit {
             .subscribe(
                 data => {
                   this.loading = false;
-                  console.log(data);
+                  this.addcontact = false;
+                  this.getContacts();
                },
                 error => {
                     this.alertService.error(error);
@@ -211,8 +219,8 @@ export class ExhibitorPortalComponent implements OnInit {
               .pipe(first())
               .subscribe(
                   data => {
-                    this.loading = false;
-                    console.log(data);
+                    this.addcontact = false;
+                    this.getContacts();
                  },
                   error => {
                       this.alertService.error(error);
