@@ -15,7 +15,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
-import { MatInputModule, MatSortModule, MatFormFieldModule, MatTabsModule, MatTableModule, MatPaginatorModule, MatExpansionModule } from '@angular/material';
+import { MatInputModule, MatSortModule, MatFormFieldModule, MatTabsModule, MatTableModule, MatProgressBarModule, MatPaginatorModule, MatExpansionModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -38,6 +38,7 @@ import { SuppliersComponent } from './suppliers/suppliers.component';
 import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.component';
 import { ExhibitorNavComponent } from './exhibitor-portal/exhibitor-nav.component';
 import { MatFileUploadModule } from 'angular-material-fileupload';
+import { MatuploadComponent } from './matupload/matupload.component';
 
 @NgModule({
   declarations: [
@@ -54,9 +55,8 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     ProfileComponent,   
     SuppliersComponent, 
     ExhibitorPortalComponent, 
-    ExhibitorNavComponent,
-    
-    
+    ExhibitorNavComponent,   
+    MatuploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,6 +87,7 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     MatAutocompleteModule,
     MatExpansionModule,
    CarouselModule,
+   MatProgressBarModule
     
   ],
   providers: [
@@ -116,7 +117,8 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     MatSelectModule,
     MatAutocompleteModule,
     MatFileUploadModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressBarModule
    
     ]
 })

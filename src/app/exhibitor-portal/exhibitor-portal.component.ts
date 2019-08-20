@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { User } from '../user';
 import { AuthenticationService } from '../authentication.service';
 import { ExhibitorService } from '../exhibitor.service';
@@ -9,13 +9,13 @@ import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '
 //import { ProfileComponent } from '../profile/profile.component';
 import { MatTab, MatExpansionPanel, MatTableDataSource  } from '@angular/material';
 import { MatButton } from '@angular/material/button'; 
-import { MatFileUploadQueue } from 'angular-material-fileupload';
+//import { MatFileUploadQueue, MatFileUpload } from 'angular-material-fileupload';
 import { first, share } from 'rxjs/operators';
 import { Subscription  } from 'rxjs';
 import { Router } from '@angular/router';
 import { Exhibitor } from '../exhibitor';
 import { Exhibitorcontact } from '../exhibitorcontact';
-import { UploadService } from '../upload.service';
+
 
 
 @Component({
@@ -48,13 +48,15 @@ export class ExhibitorPortalComponent implements OnInit {
   addcontact: boolean = false;
   exhibitorEdit: boolean = false;
 
+  event = new EventEmitter();
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private exhibitorService: ExhibitorService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private uploadService: UploadService
+    //private uploadService: UploadService
 ) {
 }
   ngOnInit() {
@@ -131,14 +133,15 @@ export class ExhibitorPortalComponent implements OnInit {
   }
 
  // Coming from any file uploads
-  onFileComplete(data: any) {
+  onFileComplete(data) {
 
     this.logoIsSet = true;
+    this.event = data.event;
     console.log(data);
     this.logosrc = data['file']['name']; // save the image name.
 
   }
- 
+
   onPublish() {
 
     this.published = true;

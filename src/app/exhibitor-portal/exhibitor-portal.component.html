@@ -25,7 +25,9 @@
                             <mat-card-subtitle>Upload logo</mat-card-subtitle>
                             <img mat-card-avatar *ngIf="logoIsSet" src="" alt="company-logo">
                             <div *ngIf="!logoIsSet">
-                                <label for="singleFile">Upload file</label>
+
+                                    <app-matupload (complete)="onFileComplete($event)"></app-matupload>
+                     <!--           <label for="singleFile">Upload file</label>
                                 <input id="singleFile" type="file"  [fileUploadInputFor]= "fileUploadQueue"/>
                                 
                                 <mat-file-upload-queue #fileUploadQueue
@@ -33,6 +35,7 @@
                                         [httpUrl]="'http://api.acetronic.com/upload'" >
                                 <mat-file-upload (onUpload)="onFileComplete($event)" [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
                                 </mat-file-upload-queue>
+                            -->
                             </div>                                            
                         </mat-card>
 
