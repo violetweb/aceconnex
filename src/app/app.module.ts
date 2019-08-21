@@ -17,7 +17,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import { MatInputModule, MatSortModule, MatFormFieldModule, MatTabsModule, MatTableModule, MatProgressBarModule, MatPaginatorModule, MatExpansionModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import {MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +26,7 @@ import { NavComponent } from './nav/nav.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { PopupComponent } from './popup/popup.component';
+import { DialogContactComponent } from './dialog-contact/dialog-contact.component';
 import { PopupService } from './popup/popup.service';
 import { FileDetector } from 'protractor';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -39,6 +40,7 @@ import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.co
 import { ExhibitorNavComponent } from './exhibitor-portal/exhibitor-nav.component';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { MatuploadComponent } from './matupload/matupload.component';
+//import { DialogContactComponent } from './dialog-contact/dialog-contact.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { MatuploadComponent } from './matupload/matupload.component';
     SuppliersComponent, 
     ExhibitorPortalComponent, 
     ExhibitorNavComponent,   
-    MatuploadComponent,
+    MatuploadComponent, 
+    DialogContactComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,8 @@ import { MatuploadComponent } from './matupload/matupload.component';
     MatAutocompleteModule,
     MatExpansionModule,
    CarouselModule,
-   MatProgressBarModule
+   MatProgressBarModule,
+   MatDialogModule
     
   ],
   providers: [
@@ -95,7 +99,8 @@ import { MatuploadComponent } from './matupload/matupload.component';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    PopupComponent
+    PopupComponent,
+    DialogContactComponent
   ],
   exports: [
     MatSidenavModule,
@@ -118,7 +123,8 @@ import { MatuploadComponent } from './matupload/matupload.component';
     MatAutocompleteModule,
     MatFileUploadModule,
     MatExpansionModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule
    
     ]
 })

@@ -1,28 +1,26 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter} from '@angular/core';
 import { User } from '../user';
 import { AuthenticationService } from '../authentication.service';
 import { ExhibitorService } from '../exhibitor.service';
 import { AlertService } from '../alert.service';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DialogContactComponent } from '../dialog-contact/dialog-contact.component';
 import { ExhibitorNavComponent } from './exhibitor-nav.component';
 import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-//import { ProfileComponent } from '../profile/profile.component';
 import { MatTab, MatExpansionPanel, MatTableDataSource  } from '@angular/material';
 import { MatButton } from '@angular/material/button'; 
-//import { MatFileUploadQueue, MatFileUpload } from 'angular-material-fileupload';
 import { first, share } from 'rxjs/operators';
 import { Subscription  } from 'rxjs';
 import { Router } from '@angular/router';
 import { Exhibitor } from '../exhibitor';
 import { Exhibitorcontact } from '../exhibitorcontact';
-
+import { Contacttypes } from '../dialog-contact/contacttypes';
 
 
 @Component({
   selector: 'app-exhibitor-portal',
   templateUrl: './exhibitor-portal.component.html',
   styleUrls: ['./exhibitor-portal.component.scss']
-
 })
 export class ExhibitorPortalComponent implements OnInit {
 
@@ -37,7 +35,7 @@ export class ExhibitorPortalComponent implements OnInit {
   saveContactForm: FormGroup;
   loading: boolean = false;
   logoIsSet: boolean = false;
-  logosrc = '';
+  logosrc: string = null;
   contactsexist: boolean = false;
   contactedit: boolean = false;
   submitted: boolean = false;
@@ -47,8 +45,15 @@ export class ExhibitorPortalComponent implements OnInit {
   contactsData;
   addcontact: boolean = false;
   exhibitorEdit: boolean = false;
-
+  clientid = '';
   event = new EventEmitter();
+
+  contacttypes: Contacttypes[] = [
+    {value: 'marketing', viewValue: 'Marketing'},
+    {value: 'exhibitor', viewValue: 'Exhibitor'},
+    {value: 'presenter', viewValue: 'Presenter'},
+    {value: 'attendee', viewValue: 'Attendee'}
+  ];
 
   constructor(
     private router: Router,
@@ -56,6 +61,7 @@ export class ExhibitorPortalComponent implements OnInit {
     private exhibitorService: ExhibitorService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
+    public dialog: MatDialog
     //private uploadService: UploadService
 ) {
 }
@@ -87,22 +93,24 @@ export class ExhibitorPortalComponent implements OnInit {
     });
 
 
-    this.exhibitorid = '2'; // replace this with a lookup of the exhibitor id... or get from login info.
+    this.clientid = localStorage.getItem('client_id'); // replace this with a lookup of the exhibitor id... or get from login info.
 
-    //Grab the exhibitor id, if user is logged in.
-    this.exhibitorService.getById('2').
+    this.exhibitorService.getById(this.clientid).
     pipe(first())
     .subscribe(
         data => {
           this.exhibitorData = data['data'].slice();
+          this.exhibitorid = data['data'][0]['id'];
+          this.logosrc = data['data'][0]['logosrc'];
+          if (this.exhibitorid != ''){
+            this.panelOpenState = true;
+            this.getContacts();
+          }
        },
         error => {
             this.alertService.error(error);
             this.loading = false;
         });
-
-      this.panelOpenState = true;
-      this.getContacts();
 }
 
   getContacts() {
@@ -126,19 +134,39 @@ export class ExhibitorPortalComponent implements OnInit {
     this.exhibitorService.updateContact(element).subscribe(data => this.contactsData = this.getContacts());
   }
 
-  deleteContact(id){
+
+  updateExhibitor(element) {
+    this.exhibitorService.update(element).subscribe(data => 
+      console.log(data));
+  }
+
+  deleteContact(id) {
     this.exhibitorService.deleteContact(id).subscribe(
       data => this.contactsData = this.getContacts());
 
+  }
+
+  openDialog(action, obj): void {
+    const dialogRef = this.dialog.open(DialogContactComponent, {
+      width: '850px',
+      data: {contactname: '', title: '', phone: '', ext: '', email: '', contacttypes: this.contacttypes }
+        });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.exhibitorService.insertContact(this.exhibitorid, result.contactname, result.title, 
+        result.email, result.phone, result.ext, result.contacttype)
+      .subscribe(data => this.getContacts());
+    });
   }
 
  // Coming from any file uploads
   onFileComplete(data) {
 
     this.logoIsSet = true;
-    this.event = data.event;
-    console.log(data);
-    this.logosrc = data['file']['name']; // save the image name.
+    this.logosrc = 'http://api.acetronic.com/uploads/' + data['filename'];
+    this.exhibitorService.updateLogo(this.exhibitorid, this.logosrc).subscribe(result => {
+      console.log(result['result']);
+    });
 
   }
 

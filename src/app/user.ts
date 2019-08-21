@@ -8,6 +8,7 @@ export class User {
     client_secret: string;
     grant_type: string;
     access_token: string;
+    exb_id: number;
 
     getFullname() {
         return this.firstname + ' ' + this.lastname;

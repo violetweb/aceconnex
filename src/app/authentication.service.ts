@@ -66,18 +66,20 @@ export class AuthenticationService {
       1.  send over client_id / client_secret and if they exist in the oauth_clients table, 
           generates a "token" for use with this session.
       2.  Token is saved to local Storage.
+      3.  Records are in the database in the oauth_clients table.
   */
   let grant_type = 'client_credentials';
+  //
    return this.http.post<any>(environment.baseUrl + '/token', {client_id, client_secret, grant_type })
         .pipe(map(data => {
             // login successful if there's a jwt token in the response
             if (data) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', data.access_token);
-                //localStorage.setItem('client_id', client_id);
+                localStorage.setItem('client_id', client_id);
                // localStorage.setItem('client_secret', client_secret);
                 this.currentUserSubject.next(data);
-               
+
             }
 
             return data;

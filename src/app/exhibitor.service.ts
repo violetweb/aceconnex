@@ -24,6 +24,7 @@ export class ExhibitorService {
     return this.http.get<Exhibitor[]>(this.url + '/exhibitors/get?id=' + id);
   }
 
+
   getContactsById(id: string){
     return this.http.get<Exhibitorcontact[]>(this.url + '/exhibitors/getContacts?id=' + id);
   }
@@ -44,12 +45,16 @@ export class ExhibitorService {
     return this.http.post(this.url + '/exhibitors/updatecontact', {exhibitorcontact});
   }
 
+  updateLogo(exhibitorid, logosrc) {
+    return this.http.post(this.url + '/exhibitors/updateLogo',  { exhibitorid, logosrc });
+  }
+
   deleteContact(contactid){
     return this.http.post(this.url + '/exhibitors/deletecontact', { contactid });
   }
 
   update(exhibitor: Exhibitor) {
-    return this.http.post(this.url + '/exhibitors/' + exhibitor.id, { exhibitor });
+    return this.http.post(this.url + '/exhibitors/update', { exhibitor });
   }
 
   delete(id) {
