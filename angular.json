@@ -29,7 +29,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+             "src/assets/PreviewandPrintLabel.js"
+
+            ]
           },
           "configurations": {
             "production": {
@@ -85,7 +88,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+             
+
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

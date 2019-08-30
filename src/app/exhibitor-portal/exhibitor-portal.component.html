@@ -1,7 +1,7 @@
 
 <!-- SUB NAVIGATION WITHIN THIS SECTION-->
 <app-enav></app-enav>
-<mat-tab-group>
+<mat-tab-group selectedIndex='0' (selectedTabChange)="changeTab($event)">
   <mat-tab label="Company">
     
       <mat-card>
@@ -29,6 +29,7 @@
                    
                             </div> 
                             <div *ngIf="logosrc">
+                                <button matButton (click)="replaceLogo()">Replace Logo</button>
                                 <img [src]="logosrc" alt="company logo"/>
                             </div>                                           
                         </mat-card>
@@ -324,14 +325,133 @@
 
   </mat-tab>
  
-  <mat-tab label="Exhibitor Badges">
-<button mat-button (click)="openContactList()" primary>Add Contact</button>
-Need to list the name... and lunch or dinner or both.
-first name  last name  dropdown (lunch / dinner / both)  iDENTIFY THE 
+<mat-tab label="Exhibitor Badges">
 
+    <div *ngIf="exhibitoractive" >
+
+    <app-dymo-label [fullname]="fullname" [company]="company" [badge]="badge" [title]="title"></app-dymo-label>
+    
+    
+    <mat-table #table [dataSource]="contactsData">
+       <!-- Name Column -->
+       <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Badge Results </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <mat-form-field floatLabel="never">
+               <input matInput placeholder="id" [value]="element.id">
+               <mat-chip-list aria-label="Fish selection">
+                <mat-chip>One fish</mat-chip>
+                <mat-chip>Two fish</mat-chip>
+                <mat-chip color="primary" selected>Print Badge</mat-chip>
+                <mat-chip color="accent" selected>Accent fish</mat-chip>
+              </mat-chip-list>
+              <button matButton (click)="onPrintBadge(element)" class="btn btn-primary">Print Badge</button>
+
+            </mat-form-field>
+              </mat-cell>
+    </ng-container>
+       <!-- Name Column -->
+    <ng-container matColumnDef="contactname">
+        <mat-header-cell *matHeaderCellDef> Contact Name </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <mat-form-field floatLabel="never">
+                <input matInput placeholder="Contact Name" [value]="element.contactname" [(ngModel)]="element.contactname">
+            </mat-form-field>
+        </mat-cell>
+    </ng-container>
+       <!-- Name Column -->
+       <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <mat-form-field floatLabel="never">
+                    <input matInput  placeholder="Title" [value]="element.title" [(ngModel)]="element.title">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+    <ng-container matColumnDef="company_name">
+            <mat-header-cell *matHeaderCellDef> Company Name </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="Company Name" [value]="element.company_name" [(ngModel)]="element.company_name">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="badge">
+                <mat-header-cell *matHeaderCellDef> Badge </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-form-field floatLabel="never">
+                        <input matInput placeholder="Company Name" [value]="element.badge" [(ngModel)]="element.badge">
+                    </mat-form-field>
+                </mat-cell>
+            </ng-container>
+          <!-- Symbol Column -->
+      <ng-container matColumnDef="contacttype">
+            <mat-header-cell *matHeaderCellDef> Contact Type </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="Type" [value]="element.contacttype" [(ngModel)]="element.contacttype">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="badgeType">
+            <mat-header-cell *matHeaderCellDef> Badge Assignments </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <mat-form-field floatLabel="never">
+                    put checkmarks here for attendance
+                    <input type="checkbox" value=""/><label>Lunch</label>
+                    <input type="checkbox" value=""/><label>Dinner</label>
+                    <input type="checkbox" value=""/><label>Badge Only</label>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+
+
+    <mat-header-row *matHeaderRowDef="badgeColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: badgeColumns;"></mat-row>
+</mat-table>
+</div>
   </mat-tab>
-  <mat-tab label="Marketing">Marketing</mat-tab>
-  <mat-tab label="Venue">Venue</mat-tab>
+  <mat-tab *ngIf="presentationData" label="Presentation">
+      <p>Tips:  Please keep in mind that your presentation is one hour long.  When creating your presentation, you may want to practice and leave time to take a few questions.
+          You may choose to provide some "takeaway" materials to further whatever your presentation or for following up with unanswered questions after the presentation.
+      </p>
+      <p>The following will be on hand the day of your presentation</p>
+    <p>Please provide details of your presentation.</p>
+    
+    <div *ngFor="let presentation of presentationData;">
+        <table class="table table-condensed">
+            <tr>
+                <td>Your Presentation begins at:</td>
+                <td> <input matInput placeholder="Presentation Time" value="{{presentation.duration}}">
+                    <p class="mat-caption">You will be presenting for one hour starting at the above time.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>Presentation Title</td>
+                <td>   <input matInput (change)="updatePresentation(presentation)" placeholder="Presentation Title" value="{{presentation.title}}" [(ngModel)]="presentation.title"/><br/>    
+                    <p class="mat-caption">Put a description here of how to name the title.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>     <input matInput (change)="updatePresentation(presentation)" placeholder="Presentation Marketing Description" value="{{presentation.description}}" [(ngModel)]="presentation.description"/><br/>
+       <p class="mat-caption">Please provide a description that we can use to promote your presentation in our marketing materials.</p>
+                    </td>
+            </tr>
+         
+            </table>
+      </div>
+        
+  
+  </mat-tab>
+  <mat-tab label="Venue">
+      Venue
+    <p>Put hotel information here, maps, phone numbers, booking information</p>
+    <p>Put Presentation Time Slot for this Exhibitor Here</p>
+    <p></p>
+    </mat-tab>
 </mat-tab-group>
 
 

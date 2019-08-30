@@ -1,0 +1,22 @@
+<div class="presentation-limit-width">
+    <div class="presentation-title">
+      <h2>Product Presentations</h2>
+       <div class="presentation-underline"></div>
+     </div>
+     <div class="presentation-table presentation-table-items">
+       <div *ngFor="let p of presentationData" class="presentation-row">
+          <div class="presentation-column presentation-column-title">
+            <h3>{{p.duration}}</h3>
+          </div>
+          <div class="presentation-column presentation-column-icon">
+            <div class="presentation-item-icon"><i class="fa fa-check"></i></div>
+            <div class="presentation-vertline"></div>
+          </div>
+          <div class="presentation-column presentation-column-info">
+             <h3>{{p.title}}</h3>
+             <p>{{p.description}}</p>
+          </div>
+        </div>
+      </div>
+</div>
+   

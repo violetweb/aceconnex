@@ -1,0 +1,17 @@
+<!--- instructions:
+
+1.  download and install the dymo 8.7.3 software and install on the computer you will print from.
+2.  check the browser, and override any browser exception warnings : https://localhost:41951/DYMO/DLS/Printing/Check
+-->
+
+
+<div class="row">    
+  <div class="col-md-12">
+   <select>
+      <option *ngFor="let p of printers" value="{{p.name}}">{{p.name}}</option>               
+   </select>
+        
+    <img alt="label image" src='{{labelImage}}'/>
+    <button mat-button (click)="onPrintLabel()" color="primary">Print Label</button>
+  </div>
+</div>

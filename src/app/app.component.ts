@@ -6,7 +6,7 @@ import { User } from './user';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
 
-
+declare const loadPrinters: any;
 
 @Component({
   selector: 'app-root',
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
+   
 
     title = 'AceConnex Portal';
     currentUser: User;

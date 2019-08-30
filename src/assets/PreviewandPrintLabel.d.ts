@@ -1,0 +1,13 @@
+export declare function loadPrinter();
+export declare function loadLabelFromWeb();
+export declare function renderPreview(label);
+export declare function getFullname(label);
+export declare function setFullname(label,address);
+export declare function getCompany(label);
+export declare function setCompany(label,address);
+export declare function getTitle(label);
+export declare function setTitle(label, address);
+export declare function getBadge(label);
+export declare function setBadge(label, address);
+export declare function setAddress(address);
+export declare function printLabel(label,printerName);

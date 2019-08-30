@@ -8,5 +8,7 @@ export class Exhibitorcontact {
         phone: string;
         ext: string;
         contacttype: string; // primary contact or marketing, presenter
+        company_name: string;
+        badge: string;
 
 }

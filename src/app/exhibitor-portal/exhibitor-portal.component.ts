@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter} from '@angular/core';
 import { User } from '../user';
+import { Presentation } from '../presentation';
 import { AuthenticationService } from '../authentication.service';
 import { ExhibitorService } from '../exhibitor.service';
 import { AlertService } from '../alert.service';
@@ -7,7 +8,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { DialogContactComponent } from '../dialog-contact/dialog-contact.component';
 import { ExhibitorNavComponent } from './exhibitor-nav.component';
 import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { MatTab, MatExpansionPanel, MatTableDataSource  } from '@angular/material';
+import { MatExpansionPanel, MatTableDataSource, MatTabLabel  } from '@angular/material';
+import {MatTabsModule} from '@angular/material/tabs'; 
 import { MatButton } from '@angular/material/button'; 
 import { first, share } from 'rxjs/operators';
 import { Subscription  } from 'rxjs';
@@ -15,6 +17,8 @@ import { Router } from '@angular/router';
 import { Exhibitor } from '../exhibitor';
 import { Exhibitorcontact } from '../exhibitorcontact';
 import { Contacttypes } from '../dialog-contact/contacttypes';
+import { DymoLabelComponent } from '../dymo-label/dymo-label.component';
+import { setFullname, renderPreview } from 'src/assets/PreviewandPrintLabel';
 
 
 @Component({
@@ -25,6 +29,7 @@ import { Contacttypes } from '../dialog-contact/contacttypes';
 export class ExhibitorPortalComponent implements OnInit {
 
   displayedColumns = ['id', 'contactname', 'email', 'title', 'phone', 'ext', 'contacttype'];
+  badgeColumns = ['id', 'contactname', 'company_name', 'title', 'contacttype'];
   loggedIn: boolean = false;
   currentUser: User;
   currentUserSubscription: Subscription;
@@ -43,10 +48,18 @@ export class ExhibitorPortalComponent implements OnInit {
   exhibitorData: [];
   panelOpenState = true;
   contactsData;
+  presentationData: Presentation[];
   addcontact: boolean = false;
   exhibitorEdit: boolean = false;
   clientid = '';
   event = new EventEmitter();
+  fullname = 'John Doe';
+  company = 'Acetronic Industrial Controls';
+  title = 'Testing Label';
+  badge = '12345';
+  tabIndex = 0 ;
+  exhibitoractive = false;
+  presentationid: any;
 
   contacttypes: Contacttypes[] = [
     {value: 'marketing', viewValue: 'Marketing'},
@@ -62,9 +75,18 @@ export class ExhibitorPortalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     public dialog: MatDialog
-    //private uploadService: UploadService
+   
 ) {
 }
+
+changeTab(event){
+  this.tabIndex = event.index;
+  if (event.index === 1) {
+    this.exhibitoractive = true;
+  }
+  
+}
+
   ngOnInit() {
 
     this.loggedIn = (this.authenticationService.currentUserSubject.value) ? true : false;
@@ -102,9 +124,11 @@ export class ExhibitorPortalComponent implements OnInit {
           this.exhibitorData = data['data'].slice();
           this.exhibitorid = data['data'][0]['id'];
           this.logosrc = data['data'][0]['logosrc'];
-          if (this.exhibitorid != ''){
+          if (this.exhibitorid !== ''){
             this.panelOpenState = true;
             this.getContacts();
+            this.getPresentation();
+           
           }
        },
         error => {
@@ -118,6 +142,7 @@ export class ExhibitorPortalComponent implements OnInit {
     pipe(first())
     .subscribe(
       data => {
+        this.contactsexist = true;
         const ELEMENT_DATA: Exhibitorcontact[] = data['data'].slice();
         this.contactsData = new MatTableDataSource(ELEMENT_DATA);
         if (this.contactsData) {
@@ -130,9 +155,39 @@ export class ExhibitorPortalComponent implements OnInit {
     });
   }
 
+  getPresentation() {
+
+    if (this.exhibitorid !== '') {
+      this.exhibitorService.getPresentation(this.exhibitorid).
+      pipe(first())
+      .subscribe(
+        data => {
+          if (data['data'].length > 0) {
+            const ELEMENT_DATA: Presentation[] = data['data'].slice();
+            this.presentationData = ELEMENT_DATA;
+            this.presentationid = this.presentationData[0].id;
+          }
+      },
+        error => {
+            this.alertService.error(error);
+            this.loading = false;
+      });
+    } else {
+      console.log('Something went wrong; no exhibitor id');
+    }
+  }
+
   updateContact(element) {
     this.exhibitorService.updateContact(element).subscribe(data => this.contactsData = this.getContacts());
   }
+
+  updatePresentation(element) {
+    this.exhibitorService.updatePresentation(element).subscribe(
+      data => {
+          this.getPresentation();
+      });
+  }
+
 
 
   updateExhibitor(element) {
@@ -169,6 +224,9 @@ export class ExhibitorPortalComponent implements OnInit {
     });
 
   }
+  replaceLogo(){
+    this.logosrc = '';
+  }
 
   onPublish() {
 
@@ -188,6 +246,16 @@ export class ExhibitorPortalComponent implements OnInit {
     get f() { return this.companyForm.controls; }
     get c() { return this.contactsForm.controls; }
 
+
+
+   // When we click "print badge button" from the list of contacts,
+   // Update the label for the print badge.
+   onPrintBadge(element) {
+      this.fullname = element.contactname;
+      this.company = element.company_name;
+      this.title = element.title;
+      this.badge = element.badge;
+   }
 
     onSubmit() {
 

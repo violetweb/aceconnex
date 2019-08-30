@@ -15,10 +15,12 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
+import {MatChipsModule} from '@angular/material/chips'; 
 import { MatInputModule, MatSortModule, MatFormFieldModule, MatTabsModule, MatTableModule, MatProgressBarModule, MatPaginatorModule, MatExpansionModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,7 +42,9 @@ import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.co
 import { ExhibitorNavComponent } from './exhibitor-portal/exhibitor-nav.component';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { MatuploadComponent } from './matupload/matupload.component';
-//import { DialogContactComponent } from './dialog-contact/dialog-contact.component';
+import { DymoLabelComponent } from './dymo-label/dymo-label.component';
+import { PresentationComponent } from './presentation/presentation.component';
+
 
 @NgModule({
   declarations: [
@@ -54,12 +58,14 @@ import { MatuploadComponent } from './matupload/matupload.component';
     LoginComponent,
     FooterComponent,
     HeaderComponent,
-    ProfileComponent,   
-    SuppliersComponent, 
-    ExhibitorPortalComponent, 
-    ExhibitorNavComponent,   
-    MatuploadComponent, 
+    ProfileComponent,
+    SuppliersComponent,
+    ExhibitorPortalComponent,
+    ExhibitorNavComponent,
+    MatuploadComponent,
     DialogContactComponent,
+    DymoLabelComponent,
+    PresentationComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +76,7 @@ import { MatuploadComponent } from './matupload/matupload.component';
     ChartsModule,
     MatSidenavModule,
     MatCheckboxModule,
-   MatFileUploadModule,
+    MatFileUploadModule,
     MatIconModule,
     MatMenuModule,
     MatListModule,
@@ -91,8 +97,9 @@ import { MatuploadComponent } from './matupload/matupload.component';
     MatExpansionModule,
    CarouselModule,
    MatProgressBarModule,
-   MatDialogModule
-    
+   MatDialogModule,
+   MatChipsModule
+   
   ],
   providers: [
     PopupService
@@ -124,8 +131,8 @@ import { MatuploadComponent } from './matupload/matupload.component';
     MatFileUploadModule,
     MatExpansionModule,
     MatProgressBarModule,
-    MatDialogModule
-   
+    MatDialogModule,
+   MatChipsModule
     ]
 })
 export class AppModule { }
