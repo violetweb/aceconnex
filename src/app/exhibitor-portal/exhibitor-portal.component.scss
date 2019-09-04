@@ -7,4 +7,12 @@
 .mat-card {
     font-size:18px;
     line-height:24px;
+    color: #333333;
+}
+.mat-table, .mat-cell, .mat-footer-cell {
+    color:#333333;
+}
+.mat-button.mat-primary {
+    background-color: #b34436;
+    color:#fff;
 }

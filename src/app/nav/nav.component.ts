@@ -10,15 +10,10 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
 
 
-  opened: boolean;
-
+ 
   constructor(private router: Router) {}
 
   ngOnInit() {
-  }
-
-  toggle(open) {
-
   }
 
 }

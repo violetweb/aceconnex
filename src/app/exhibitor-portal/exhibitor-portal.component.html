@@ -1,56 +1,45 @@
-
 <!-- SUB NAVIGATION WITHIN THIS SECTION-->
 <app-enav></app-enav>
 <mat-tab-group selectedIndex='0' (selectedTabChange)="changeTab($event)">
   <mat-tab label="Company">
     
-      <mat-card>
-          
+      <mat-card>          
         <mat-card-content>
                 <label *ngIf="!published">UNPUBLISHED</label><button *ngIf="!published" class="material-icons" mat-button (click)="onPublish()">PUBLISH</button>
-                <button *ngIf="published" class="material-icons" mat-button>PUBLISHED</button>
+                <button *ngIf="published" color="primary" class="material-icons" mat-button>PUBLISHED</button>
         </mat-card-content>
-
       </mat-card>
-      <mat-card>
-    
-        <mat-card-title>Company Location / Contact Info</mat-card-title>   
-        <mat-card-content>   
 
-            <div class="row">
-                
-                    <div class="col-md-4 col-md-offset-1">
-                        <mat-card>
-                            <mat-card-title>Company Logo</mat-card-title>                          
-                            <img mat-card-avatar *ngIf="logosrc" src="" alt="company-logo">
-                            <div *ngIf="!logosrc">
-
-                                    <app-matupload (complete)="onFileComplete($event)"></app-matupload>
-                   
-                            </div> 
-                            <div *ngIf="logosrc">
-                                <button matButton (click)="replaceLogo()">Replace Logo</button>
-                                <img [src]="logosrc" alt="company logo"/>
-                            </div>                                           
-                        </mat-card>
-
-                </div>
-                <div class="col-md-6 col-md-offset-1">  
-                    <div *ngIf="exhibitorData">
-                       
-                        <div *ngFor="let item of exhibitorData;">
-                          
-                           
-                         
-                                   
-                                    <mat-form-field floatLabel="never">
-                                            <mat-label></mat-label>
-                                    <input matInput (change)="updateExhibitor(item)" placeholder="Company Name" [value]="item.company_name" [(ngModel)]="item.company_name">
-                               </mat-form-field>
-                           <br/>
-                                <mat-form-field floatLabel="never">
-                                    <input matInput (change)="updateExhitibor(item)" placeholder="Address1" [value]="item.address1" [(ngModel)]="item.address1">
-                                </mat-form-field>
+   
+    <div class="row">                
+        <div class="col-md-3 p-3 col-md-offset-1">
+          <mat-card>
+                <mat-card-title>Your Company Logo</mat-card-title>     
+                 <mat-card-subtitle class="d-flex flex-row-reverse"><button class="btn btn-primary btn-sm" (click)="replaceLogo()">REPLACE LOGO</button></mat-card-subtitle>
+                 <mat-card-content>
+                    <div *ngIf="!logosrc">
+                            <app-matupload (complete)="onFileComplete($event)"></app-matupload>                   
+                    </div> 
+                    <div *ngIf="logosrc">                              
+                        <img [src]="logosrc" alt="company logo"/>                                
+                    </div>     
+                </mat-card-content>               
+            </mat-card>
+        </div>
+        <div class="col-md-6 p-3 col-md-offset-1">  
+            <mat-card>
+                <mat-card-title>Testing</mat-card-title>
+                <mat-card-content>
+            
+                   <div *ngIf="exhibitorData">                       
+                      <div *ngFor="let item of exhibitorData;">                              
+                    <mat-form-field floatLabel="never">
+                        <mat-label></mat-label>
+                         <input matInput (change)="updateExhibitor(item)" placeholder="Company Name" [value]="item.company_name" [(ngModel)]="item.company_name">
+                       </mat-form-field>
+                        <mat-form-field floatLabel="never">
+                           <input matInput (change)="updateExhitibor(item)" placeholder="Address1" [value]="item.address1" [(ngModel)]="item.address1">
+                       </mat-form-field>
                                 <mat-form-field floatLabel="never">
                                     <input matInput (change)="updateExhibitor(item)" placeholder="Address2" [value]="item.address2" [(ngModel)]="item.address2">
                                 </mat-form-field>
@@ -79,10 +68,7 @@
                                     <input matInput (change)="updateExhibitor(item)" type="tel" placeholder="Phone 3" [value]="item.phone3" [(ngModel)]="item.phone3">
                                 </mat-form-field>
                             <br/>                     
-                           
-                     
-                       
-                    
+                         
                             <ul>
                                 <li>
                                     <mat-form-field class="example-full-width">
@@ -168,15 +154,13 @@
                         <p class="text-right pt-2">If you would like to exhibit, please visit this page :...Haven't got an account?&nbsp;&nbsp;<a [routerLink]="['/register']" class="btn-link">Register</a></p>
                     </div>
                 </form>
-            </div>
-                    </div>
+            </mat-card-content>    
+              </mat-card>
+            
+        </div>
+     </div>
                     
-                         
-                        </mat-card-content>
-     
-     
-       
-                    </mat-card>
+        
 
                     <mat-card>
                         <mat-card-title>Contacts</mat-card-title>
@@ -190,8 +174,8 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef> Id. </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.id}} 
-                        <button mat-button (click)="deleteContact(element.id)">delete</button>
+                    <mat-cell *matCellDef="let element"> <span>{{element.id}}</span>
+                        <button mat-button color="primary" (click)="deleteContact(element.id)">delete</button>
                     </mat-cell>
                 </ng-container>
          

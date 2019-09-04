@@ -15,9 +15,8 @@ declare const loadPrinters: any;
 })
 export class AppComponent {
 
-   
 
-    title = 'AceConnex Portal';
+    title = 'AceConnex - Keeping You Connected!';
     currentUser: User;
 
     constructor(

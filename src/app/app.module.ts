@@ -44,6 +44,7 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
 import { MatuploadComponent } from './matupload/matupload.component';
 import { DymoLabelComponent } from './dymo-label/dymo-label.component';
 import { PresentationComponent } from './presentation/presentation.component';
+import { MatAnimatedIconComponent } from './mat-animated-icon/mat-animated-icon.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { PresentationComponent } from './presentation/presentation.component';
     DialogContactComponent,
     DymoLabelComponent,
     PresentationComponent,
+    MatAnimatedIconComponent,
   ],
   imports: [
     BrowserModule,
@@ -132,7 +134,8 @@ import { PresentationComponent } from './presentation/presentation.component';
     MatExpansionModule,
     MatProgressBarModule,
     MatDialogModule,
-   MatChipsModule
+   MatChipsModule,
+ 
     ]
 })
 export class AppModule { }

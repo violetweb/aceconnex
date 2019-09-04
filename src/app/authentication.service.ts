@@ -17,7 +17,6 @@ export class AuthenticationService {
   currentUser: Observable<User>;
 
   url = environment.baseUrl;
-
   token: string;
 
   constructor(private http: HttpClient) {
@@ -89,6 +88,7 @@ export class AuthenticationService {
   logout() {
     this.currentUser = null;
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('client_id');
   }
 
 

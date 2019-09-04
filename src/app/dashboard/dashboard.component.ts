@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { MatSidenavModule, MatMenuModule } from '@angular/material';
 import { User } from '../user';
 import { AuthenticationService } from '../authentication.service';
@@ -7,19 +7,48 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 
+import {
+  trigger,
+  state,
+  style,
+  animate,
+transition
+} from '@angular/animations';
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  animations: [
+    trigger('openClose', [
+      // ...
+      state('openit', style({
+        opacity: 1.0,
+        
+      })),
+      state('closeit', style({
+        opacity: 0.65,
+        
+      })),
+      transition('openit => closeit', [
+        animate('1.5s')
+      ]),
+      transition('closeit => openit', [
+        animate('1.5s')
+      ]),
+    ]),
+  ],
 })
 
 export class DashboardComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MatSidenavModule;
-  @ViewChild('menu') menu: MatMenuModule;
 
-  @Output() windowopened = new EventEmitter<boolean>();
+  colorStart = 'primary';
+  colorEnd = 'accent';
 
+  events: string[] = [];
   loggedIn = true;
   currentUser: User;
   currentUserSubscription: Subscription;
@@ -33,17 +62,15 @@ export class DashboardComponent implements OnInit {
 }
 
   ngOnInit() {
-    this.opened = true;
-   // this.loggedIn = (this.authenticationService.currentUserSubject.value) ? true : false;
-  }
+    this.loggedIn = (this.authenticationService.currentUserValue) ? true : false;
 
-  onPositionChanged() {
-    
-    this.opened = !this.opened;
-    this.windowopened.emit(this.opened);
   }
 
   goProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  openChange() {
+    this.opened = !this.opened;
   }
 }

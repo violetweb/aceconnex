@@ -2,18 +2,11 @@
  <header class="sidebar-header">
     <div class="row">
       <div class="logo col-md-auto">
-        <a [routerLink]="['/about']" class="logo-expanded" alt="Acetronic"><img width="100" src="assets/images/logoArtboard 1@0.5x.png" alt="AceTronic Logo"></a>
-      </div>
-      <div class="abc">
-         put other stuff in here... 
-     <!--     <a class="btn btn-primary" (click)="toggle(opened)">
-              <i *ngIf="!open" class="material-icons">toggle_off</i>
-              <i *ngIf="open" class="material-icons">toggle_on</i>              
-          </a>-->
-      </div>
+        <a [routerLink]="['/about']" class="logo-expanded" alt="Acetronic"><img width="250" src="assets/images/logoArtboard 1@0.75x.png" alt="AceTronic Logo"></a>
+      </div>     
     </div>
 </header>
-<mat-divider></mat-divider>
+
 <div class="row">
 
     <nav class="navbar navbar-dark bg-faded">
@@ -30,6 +23,7 @@
                <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/about']">Why Attend
                 </a>
+                <mat-divider></mat-divider>
               </li>
                <li class="nav-item">
                  <a class="nav-link"

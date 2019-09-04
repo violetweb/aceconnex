@@ -1,3 +1,4 @@
+<div class="section-presentation">
 <div class="presentation-limit-width">
     <div class="presentation-title">
       <h2>Product Presentations</h2>
@@ -8,15 +9,19 @@
           <div class="presentation-column presentation-column-title">
             <h3>{{p.duration}}</h3>
           </div>
-          <div class="presentation-column presentation-column-icon">
-            <div class="presentation-item-icon"><i class="fa fa-check"></i></div>
-            <div class="presentation-vertline"></div>
+          <div class="presentation-column presentation-column-icon">            
+            <i mat-icon color="primary" class="primary material-icons md-36">done_outline</i>
+           
           </div>
+          
           <div class="presentation-column presentation-column-info">
+             
              <h3>{{p.title}}</h3>
              <p>{{p.description}}</p>
+             <br/>
+             <mat-divider></mat-divider>
           </div>
         </div>
       </div>
 </div>
-   
+</div>

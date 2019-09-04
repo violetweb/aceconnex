@@ -1,7 +1,9 @@
 
-
+.mat-drawer-container {
+   // background: rgba(19,21,22,100);
+}
 .mat-drawer {
-    background: rgba(19, 21, 22, 0.95)!important;
+    background: rgba(0, 0, 0, 0.85)!important;
     font-family: Montserrat,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     position: fixed;    
     top: 0;    
@@ -20,10 +22,15 @@
 
    
 }
+.mat-drawer-container {
+
+    background: rgba(0, 0, 0, 0.9)!important;
+}
+
 .mat-drawer::before {
     content: "";
-    border-top: 100vh solid rgba(19, 21, 22, 0.95);
-    border-right: 16rem solid transparent;
+    border-top: 100vh solid rgba(0, 0, 0, 0.85);
+    border-right: 35rem solid transparent;
     width: 0;
     height: 0;
     position: absolute;

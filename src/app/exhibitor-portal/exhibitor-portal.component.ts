@@ -122,6 +122,7 @@ changeTab(event){
     .subscribe(
         data => {
           this.exhibitorData = data['data'].slice();
+          
           this.exhibitorid = data['data'][0]['id'];
           this.logosrc = data['data'][0]['logosrc'];
           if (this.exhibitorid !== ''){
