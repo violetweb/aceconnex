@@ -8,6 +8,7 @@ import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { ExhibitorPortalComponent } from './exhibitor-portal/exhibitor-portal.component';
 import { PresentationComponent } from './presentation/presentation.component';
+import { AttendeeRegisterComponent } from './attendee-register/attendee-register.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path: 'presentations',
         component: PresentationComponent
+      },
+      {
+        path: 'attendee-register',
+        component: AttendeeRegisterComponent
       },
       { path: 'exhibitor-portal',
         component: ExhibitorPortalComponent,

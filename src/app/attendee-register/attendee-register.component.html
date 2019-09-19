@@ -1,0 +1,90 @@
+<mat-tab-group>  
+  <mat-tab label="Register For AceConnex 2020">
+      <div class="col-md-8 offset-1 p-3">
+  <mat-card>
+  <mat-card-title>REGISTER FOR ACECONNEX 2020</mat-card-title>
+  <mat-card-subtitle>Date 9th, 2020 - Blank Blank Mississauga</mat-card-subtitle>
+  <mat-card-content>   
+    
+      <div class="alert alert-warn" role="alert">
+          Register as many individuals as you would like.
+      </div>
+      <table class="table table-condensed" *ngIf="registerData.length > 0">
+        <thead>
+          <tr>
+            <td><small>First name</small></td>
+            <td><small>Last name</small></td>
+            <td><small>Company</small></td>         
+            <td><small>Title</small></td>
+            <td><small>Phone</small></td>
+            <td><small><strong>Email (username)</strong></small></td>        
+            <td><small><strong>Idn (password)</strong></small></td>
+          </tr>
+        </thead>
+          <tr *ngFor="let item of registerData;">    
+            <td>{{item.first_name}}</td>
+            <td>{{item.last_name}}</td>
+            <td>{{item.company}}</td>
+            <td>{{item.title}}</td>
+            <td>{{item.phone}}</td>    
+            <td><strong>{{item.email}}</strong></td>         
+            <td><strong>{{item.badgeid}}</strong></td>
+              
+          </tr>
+      </table>
+      <div *ngIf="registerData.length > 0">
+          <div class="alert alert-secondary">
+            <h5>An email has been sent to your email address with your username and password.  If you need to log in to make changes.</h5>
+          </div>
+      </div>    
+      <p>
+
+        Your email address is required to complete your registration as well as to check in on-site for your badge. We will use your email address to send you information about other offerings, including events, products and services, as described in the <a route="/privacy-policy">AceConnex Privacy Policy</a>.
+        
+        If you are already registered for AceConnex and need to make changes, please enter the email you used to register with. You will be prompted to enter your password.
+        </p>
+   </mat-card-content>
+   </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+     
+        <div class="col-md-8 offset-2">
+      <form [formGroup]="registerForm">
+          <mat-form-field floatLabel="never">
+              <mat-label>First name</mat-label>
+              <input formControlName="firstname" matInput placeholder="First Name">
+            </mat-form-field>
+            <mat-form-field floatLabel="never">
+              <mat-label>Last name</mat-label>
+                <input formControlName="lastname" matInput placeholder="Last Name">
+              </mat-form-field><br/>
+              <mat-form-field floatLabel="never">
+                  <mat-label>Title</mat-label>
+                  <input formControlName="title" matInput placeholder="Title">
+                </mat-form-field>
+              <mat-form-field floatLabel="never">
+              <mat-label>Company name</mat-label>
+                <input formControlName="company" matInput placeholder = "Company Name">
+              </mat-form-field><br/>
+              <mat-form-field floatLabel="never">
+                <mat-label>Email</mat-label>
+                  <input formControlName="email" matInput placeholder="Email">
+                </mat-form-field>
+                <mat-form-field floatLabel="never">
+                <mat-label>Phone</mat-label>
+                  <input formControlName="phone" matInput placeholder="Contact Phone">
+              </mat-form-field>  
+              <button mat-button color="primary" (click)="registerAttendee()">Register</button>
+            </form> 
+        
+        </div>
+       <mat-card-footer>
+         <p>Already registered?  <a >Login to your account.</a></p>
+       </mat-card-footer>
+  </mat-card-content>
+ 
+</mat-card>
+</div>
+</mat-tab>
+</mat-tab-group>

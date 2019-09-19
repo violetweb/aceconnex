@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter} from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild, ɵConsole} from '@angular/core';
 import { User } from '../user';
 import { Presentation } from '../presentation';
 import { AuthenticationService } from '../authentication.service';
@@ -8,9 +8,11 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { DialogContactComponent } from '../dialog-contact/dialog-contact.component';
 import { ExhibitorNavComponent } from './exhibitor-nav.component';
 import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatExpansionPanel, MatTableDataSource, MatTabLabel  } from '@angular/material';
-import {MatTabsModule} from '@angular/material/tabs'; 
-import { MatButton } from '@angular/material/button'; 
+import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabGroup } from '@angular/material';
+import { MatButton } from '@angular/material/button';
 import { first, share } from 'rxjs/operators';
 import { Subscription  } from 'rxjs';
 import { Router } from '@angular/router';
@@ -20,7 +22,6 @@ import { Contacttypes } from '../dialog-contact/contacttypes';
 import { DymoLabelComponent } from '../dymo-label/dymo-label.component';
 import { setFullname, renderPreview } from 'src/assets/PreviewandPrintLabel';
 
-
 @Component({
   selector: 'app-exhibitor-portal',
   templateUrl: './exhibitor-portal.component.html',
@@ -28,7 +29,8 @@ import { setFullname, renderPreview } from 'src/assets/PreviewandPrintLabel';
 })
 export class ExhibitorPortalComponent implements OnInit {
 
-  displayedColumns = ['id', 'contactname', 'email', 'title', 'phone', 'ext', 'contacttype'];
+
+  displayedColumns = ['id', 'contacttype', 'contactname','email', 'title', 'phone', 'ext'];
   badgeColumns = ['id', 'contactname', 'company_name', 'title', 'contacttype'];
   loggedIn: boolean = false;
   currentUser: User;
@@ -45,9 +47,11 @@ export class ExhibitorPortalComponent implements OnInit {
   contactedit: boolean = false;
   submitted: boolean = false;
   exhibitorid;
+  cid;
   exhibitorData: [];
   panelOpenState = true;
   contactsData;
+  presenters;
   presentationData: Presentation[];
   addcontact: boolean = false;
   exhibitorEdit: boolean = false;
@@ -60,12 +64,14 @@ export class ExhibitorPortalComponent implements OnInit {
   tabIndex = 0 ;
   exhibitoractive = false;
   presentationid: any;
+ 
 
-  contacttypes: Contacttypes[] = [
-    {value: 'marketing', viewValue: 'Marketing'},
-    {value: 'exhibitor', viewValue: 'Exhibitor'},
-    {value: 'presenter', viewValue: 'Presenter'},
-    {value: 'attendee', viewValue: 'Attendee'}
+  @ViewChild('autosize') txtAreaAutosize: CdkTextareaAutosize;
+  @ViewChild('tabs') tabGroup: MatTabGroup;
+
+  contacttypes: Contacttypes[] = [    
+    {value: 'Exhibitor', viewValue: 'Exhibitor'},
+    {value: 'Marketing', viewValue: 'Marketing'}
   ];
 
   constructor(
@@ -75,17 +81,29 @@ export class ExhibitorPortalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     public dialog: MatDialog
-   
+
 ) {
 }
 
 changeTab(event){
+  console.log(event);
   this.tabIndex = event.index;
   if (event.index === 1) {
     this.exhibitoractive = true;
   }
-  
+
 }
+  activatePresentationTab() {
+    this.tabGroup.selectedIndex = 2;
+  }
+
+//THIS NEEDS TO GO INTO THE "ROUTER AREA.... WHEN A ROUTE CHANGES, FIRE THIS CLICK."
+  ngAfterInit() {
+    if (this.router.url === '/exhibitor-portal') {
+      let element: HTMLElement = document.getElementById('closeButton') as HTMLElement;
+      element.click();
+    }
+  }
 
   ngOnInit() {
 
@@ -122,14 +140,12 @@ changeTab(event){
     .subscribe(
         data => {
           this.exhibitorData = data['data'].slice();
-          
           this.exhibitorid = data['data'][0]['id'];
           this.logosrc = data['data'][0]['logosrc'];
           if (this.exhibitorid !== ''){
             this.panelOpenState = true;
             this.getContacts();
             this.getPresentation();
-           
           }
        },
         error => {
@@ -148,16 +164,22 @@ changeTab(event){
         this.contactsData = new MatTableDataSource(ELEMENT_DATA);
         if (this.contactsData) {
           this.contactsexist = true;
+          this.cid = ELEMENT_DATA.find(x => x.contacttype === 'Presenter');
+          this.presenters = ELEMENT_DATA;
         }
      },
       error => {
           this.alertService.error(error);
           this.loading = false;
     });
+
+
   }
 
+ 
   getPresentation() {
 
+   
     if (this.exhibitorid !== '') {
       this.exhibitorService.getPresentation(this.exhibitorid).
       pipe(first())
@@ -179,17 +201,23 @@ changeTab(event){
   }
 
   updateContact(element) {
-    this.exhibitorService.updateContact(element).subscribe(data => this.contactsData = this.getContacts());
+   
+    this.exhibitorService.updateContact(element).subscribe(data => 
+      console.log(data));
   }
 
   updatePresentation(element) {
     this.exhibitorService.updatePresentation(element).subscribe(
       data => {
-          this.getPresentation();
+         // this.getPresentation();
       });
   }
 
 
+  onPresentationImageUpload($event) {
+    this.presentationData[0].presenter_image = 'http://api.acetronic.com/uploads/' + $event['filename'];
+    this.updatePresentation(this.presentationData);
+  }
 
   updateExhibitor(element) {
     this.exhibitorService.update(element).subscribe(data => 
@@ -225,7 +253,7 @@ changeTab(event){
     });
 
   }
-  replaceLogo(){
+  replaceLogo() {
     this.logosrc = '';
   }
 

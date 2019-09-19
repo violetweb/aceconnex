@@ -77,11 +77,32 @@
     width: 2px;
     background-color: rgba(255, 255, 255, 0.4);
 }
-.presentation-column-icon {
+.presentation-icon {
     border: 2px solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     -webkit-border-radius: 50%; 
     /* Firefox 1-3.6 */
     -moz-border-radius: 50%;
+    width: 3.75rem;
+    height: 3.75rem;
+    line-height: 3.75rem;
+    font-size: 1.65rem;
+    text-align: center;
     
+    
+}
+.presentation-column-icon {
+    padding: 0 2rem;
+    overflow: hidden;
+    color: #d55717;
+}
+.presentation-vertline {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    min-height: 10rem;
+    margin-left: -1px;
+    width: 2px;
+    background-color: rgba(255, 255, 255, 0.4);
 }

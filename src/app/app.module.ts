@@ -45,6 +45,7 @@ import { MatuploadComponent } from './matupload/matupload.component';
 import { DymoLabelComponent } from './dymo-label/dymo-label.component';
 import { PresentationComponent } from './presentation/presentation.component';
 import { MatAnimatedIconComponent } from './mat-animated-icon/mat-animated-icon.component';
+import { AttendeeRegisterComponent } from './attendee-register/attendee-register.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { MatAnimatedIconComponent } from './mat-animated-icon/mat-animated-icon.
     DymoLabelComponent,
     PresentationComponent,
     MatAnimatedIconComponent,
+    AttendeeRegisterComponent,
   ],
   imports: [
     BrowserModule,

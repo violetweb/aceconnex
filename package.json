@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "@ng-bootstrap/ng-bootstrap": "^4.0.1",
+    "angular-countdown-timer": "0.0.1",
     "angular-material-fileupload": "^2.0.0",
     "bootstrap": "^4.2.1",
     "chart.js": "^2.7.3",

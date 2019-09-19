@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { MatSidenavModule, MatMenuModule } from '@angular/material';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { MatSidenavModule, MatButtonModule} from '@angular/material';
 import { User } from '../user';
 import { AuthenticationService } from '../authentication.service';
 import { UserService } from '../user.service';
@@ -45,6 +45,9 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MatSidenavModule;
 
+  @Output() navToggle = new EventEmitter<boolean>();
+
+
   colorStart = 'primary';
   colorEnd = 'accent';
 
@@ -70,7 +73,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/profile']);
   }
 
+
   openChange() {
     this.opened = !this.opened;
+ 
   }
+
 }

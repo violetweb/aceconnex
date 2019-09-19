@@ -4,7 +4,7 @@
         </mat-sidenav>
         <mat-sidenav-content>
             <div class="d-flex flex-row-reverse p-3 shadow-sm">                
-                <button class="btn-close" mat-button color="primary" (click)="sidenav.toggle()">
+                <button id="closeButton" class="btn-close" #sidenavButton mat-button color="primary" (click)="sidenav.toggle()">
                    <app-mat-animated-icon start="menu" end="close" colorStart="white" colorEnd="black" [animate]="opened" class="mr-sm-2 md-48 material-icons">menu</app-mat-animated-icon>  
                 
                 </button>              

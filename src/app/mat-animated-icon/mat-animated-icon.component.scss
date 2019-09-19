@@ -1,7 +1,15 @@
 
   .material-icons {
-    transition: transform .5s;
+    transition: transform .5s;    
+   
+  }
+
+
+  .material-icons:hover { 
+    transform: scale(1.8);
     &.animate {
-      transform: rotate(360deg);
-    }
+      transform:rotate(90deg);
+     -ms-transform:rotate(90deg);
+     -webkit-transform:rotate(90deg);
+   }
   }

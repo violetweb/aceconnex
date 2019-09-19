@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
+import { CountdownTimerModule } from 'angular-countdown-timer';
 
 @Component({
   selector: 'app-about',
@@ -10,7 +11,9 @@ import { OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
 
 export class AboutComponent implements OnInit {
 
+  date = new Date('2019-01-26T00:00:00');
   
+
 
   customOptions: OwlOptions = {
     // autoWidth: true,
@@ -68,6 +71,10 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
 
     
+  }
+
+  triggerFunction() {
+    console.log('Timer Ended');
   }
 
 }

@@ -15,8 +15,8 @@
 $mat-dark-theme-background: (
   status-bar: black,
   app-bar:    black,
-  background: rgba(255,255,255,0.95),
-  hover:      rgba(white, 0.04), // TODO(kara): check style with Material Design UX
+  background: rgba(0,0,0,0.95),
+  hover:      #b44336, // TODO(kara): check style with Material Design UX
   card:       white,
   dialog:     white,
   disabled-button: rgba(white, 0.12),
@@ -30,6 +30,25 @@ $mat-dark-theme-background: (
 );
 
 
+$mat-dark-theme-foreground: (
+  base:              white,
+  divider:           $light-dividers,
+  dividers:          $light-dividers,
+  disabled:          $light-disabled-text,
+  disabled-button:   rgba(white, 0.3),
+  disabled-text:     $light-disabled-text,
+  elevation:         black,
+  hint-text:         #d66f34,
+  secondary-text:    $light-secondary-text,
+  icon:              white,
+  icons:             white,
+  text:              white,
+  slider-min:        white,
+  slider-off:        rgba(white, 0.3),
+  slider-off-active: rgba(white, 0.3),
+);
+
+
 
 $aceconnex-primary: mat-palette($mat-red, 500, 500);
 $aceconnex-accent:  mat-palette($mat-red, 500, 600, 700);
@@ -37,7 +56,7 @@ $aceconnex-accent:  mat-palette($mat-red, 500, 600, 700);
 $aceconnex-warn:    mat-palette($mat-red);
 
 $custom-background-color:  #131516;
-$custom-background-color: white;
+//$custom-background-color: white;
 
 // Create the theme object (a Sass map containing all of the palettes).
 $aceconnex-theme: mat-dark-theme($aceconnex-primary, $aceconnex-accent, $aceconnex-warn);
@@ -45,7 +64,7 @@ $background: map-get($aceconnex-theme, $custom-background-color);
 @include angular-material-theme($aceconnex-theme);
 @include mat-button-theme($aceconnex-theme);
 .mat-form-field-appearance-legacy .mat-form-field-underline {
-    background-color: #b34436
+    background-color: #b34436;
 }
 .mat-form-field {
     margin-right: 20px;
@@ -55,8 +74,12 @@ $background: map-get($aceconnex-theme, $custom-background-color);
 .mat-tab-body-content {
     background: #f3f3f3;
 }
-
-
+.mat-form-field-infix {
+    width: auto!important;   
+}
+.mat-select-value {
+  color:#333333;
+}
 //missing in the material sizes.
 .material-icons.md-18 { font-size: 18px; height:18px; width:18px; }
 .material-icons.md-24 { font-size: 24px; height:24px; width:24px; }

@@ -1,8 +1,7 @@
-<h1 mat-dialog-title>Add Contact</h1>
 <div mat-dialog-content>
   <p>Contact Information</p>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.contactname"  placeholder="Contact Name" >
+    <input matInput [(ngModel)]="data.contactname" #firstfield placeholder="Contact Name" cdkFocusInitial>
   </mat-form-field>
   <mat-form-field>
     <input matInput [(ngModel)]="data.title" placeholder="Title">
@@ -11,21 +10,26 @@
     <input matInput [(ngModel)]="data.phone" placeholder="Phone">
   </mat-form-field>
   <mat-form-field>
+      
     <input matInput [(ngModel)]="data.ext" placeholder="Ext">
   </mat-form-field>
   <mat-form-field>
+     
     <input matInput [(ngModel)]="data.email" placeholder="Email Address">
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Contact Type</mat-label>
-    <mat-select [(ngModel)]="data.contacttype" >
+      <span matPrefix>Role:&nbsp;</span>
+    <mat-select [(ngModel)]="data.contacttype" >     
       <mat-option *ngFor="let ct of data.contacttypes" [value]="ct.value">
         {{ct.viewValue}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field *ngIf="data.contacttype" floatLabel="never">                                        
+      <input matInput [value]="data.contacttype" >
+  </mat-form-field>
 </div>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-button color="accent" (click)="onNoClick()">Cancel</button>
+  <button mat-button color="primary" [mat-dialog-close]="data">Ok</button>
 </mat-dialog-actions>

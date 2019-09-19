@@ -1,42 +1,67 @@
 <!-- SUB NAVIGATION WITHIN THIS SECTION-->
 <app-enav></app-enav>
-<mat-tab-group selectedIndex='0' (selectedTabChange)="changeTab($event)">
+<mat-tab-group #tabs selectedIndex='0' (selectedTabChange)="changeTab($event)">
   <mat-tab label="Company">
     
-      <mat-card>          
+      <mat-card>   
+        <mat-card-title>STATUS</mat-card-title>       
         <mat-card-content>
-                <label *ngIf="!published">UNPUBLISHED</label><button *ngIf="!published" class="material-icons" mat-button (click)="onPublish()">PUBLISH</button>
-                <button *ngIf="published" color="primary" class="material-icons" mat-button>PUBLISHED</button>
+           <div class="d-flex bd-highlight">
+               <div>
+                   
+               <strong>IMPORTANT:  PLEASE SUBMIT YOUR INFORMATION BY (INSERT DATE).</strong><button *ngIf="!published" color="secondary" mat-button (click)="onPublish()">SUBMIT</button></div>
+               <div class="bd-highlight">
+                   <button mat-button color="accent" *ngIf="published"><mat-icon>check_circle</mat-icon></button>
+               </div>         
+            </div>
         </mat-card-content>
       </mat-card>
 
    
     <div class="row">                
-        <div class="col-md-3 p-3 col-md-offset-1">
+        <div class="col-md-3 p-3 offset-1">
           <mat-card>
-                <mat-card-title>Your Company Logo</mat-card-title>     
-                 <mat-card-subtitle class="d-flex flex-row-reverse"><button class="btn btn-primary btn-sm" (click)="replaceLogo()">REPLACE LOGO</button></mat-card-subtitle>
-                 <mat-card-content>
-                    <div *ngIf="!logosrc">
-                            <app-matupload (complete)="onFileComplete($event)"></app-matupload>                   
-                    </div> 
-                    <div *ngIf="logosrc">                              
-                        <img [src]="logosrc" alt="company logo"/>                                
-                    </div>     
-                </mat-card-content>               
+                <mat-card-title>Your Company Logo                 
+                </mat-card-title>     
+                <mat-card-subtitle class="d-flex flex-row-reverse">
+                     <button *ngIf="logosrc" mat-button color="primary" (click)="replaceLogo()">REPLACE LOGO</button>
+                </mat-card-subtitle>
+                <mat-card-content>
+                   
+                    <div class="d-flex justify-content-center">
+                        <div *ngIf="!logosrc">
+                                <app-matupload (complete)="onFileComplete($event)"></app-matupload>  
+                                <p><small>Please upload a transparent image file in .png format.  Minimum size width of 600px.</small></p>
+                 
+                        </div> 
+                        <div *ngIf="logosrc">                              
+                            <img [src]="logosrc" alt="company logo"/>                                
+                        </div> 
+                       
+                    </div>
+                    
+                                   
+                </mat-card-content>            
+                <mat-card-footer>
+                    <mat-divider></mat-divider>
+                    <div class="d-flex justify-content-center p-1">
+                        <p><small>Your company logo will be used in marketing materials to promote AceConnex 2020.</small></p>
+                    </div>
+                </mat-card-footer>   
             </mat-card>
         </div>
-        <div class="col-md-6 p-3 col-md-offset-1">  
+        <div class="company-address col-md-5 p-3 offset-1">  
             <mat-card>
-                <mat-card-title>Testing</mat-card-title>
+                <mat-card-title>Company Address</mat-card-title>
                 <mat-card-content>
-            
+                    <div class="d-flex justify-content-center">
                    <div *ngIf="exhibitorData">                       
                       <div *ngFor="let item of exhibitorData;">                              
-                    <mat-form-field floatLabel="never">
+                        <mat-form-field floatLabel="never" class="input-full-width">
                         <mat-label></mat-label>
                          <input matInput (change)="updateExhibitor(item)" placeholder="Company Name" [value]="item.company_name" [(ngModel)]="item.company_name">
                        </mat-form-field>
+                       <br/>
                         <mat-form-field floatLabel="never">
                            <input matInput (change)="updateExhitibor(item)" placeholder="Address1" [value]="item.address1" [(ngModel)]="item.address1">
                        </mat-form-field>
@@ -69,13 +94,17 @@
                                 </mat-form-field>
                             <br/>                     
                          
-                            <ul>
-                                <li>
-                                    <mat-form-field class="example-full-width">
-                                        <textarea matInput placeholder="About" [value]="item.companyabout" [(ngModel)]="item.companyabout"></textarea>
-                                      </mat-form-field>
-                                    </li>
-                            </ul>
+                               <mat-form-field class="input-full-width">
+                                   <textarea matInput 
+                                   (change)="updateExhibitor(item)"
+                                   placeholder="About" 
+                                   [value]="item.companyabout" 
+                                   [(ngModel)]="item.companyabout"
+                                   cdkTextareaAutosize
+                                   #autosize="cdkTextareaAutosize"
+                                   cdkAutosizeMinRows="2" 
+                                   cdkAutosizeMaxRows="7"></textarea>
+                                 </mat-form-field>
                               
                      
                         </div>
@@ -154,19 +183,20 @@
                         <p class="text-right pt-2">If you would like to exhibit, please visit this page :...Haven't got an account?&nbsp;&nbsp;<a [routerLink]="['/register']" class="btn-link">Register</a></p>
                     </div>
                 </form>
+            </div>
             </mat-card-content>    
               </mat-card>
             
         </div>
      </div>
                     
-        
-
+     <!-- COMPANY CONTACTS SECTION -->   
+    <div class="col-md-10 offset-1">    
                     <mat-card>
-                        <mat-card-title>Contacts</mat-card-title>
+                        <mat-card-title>Company Contacts</mat-card-title>
                         <mat-card-content>
                             <!-- TO DO :  Add contact should open as an overlay -->
-                                <button mat-button (click)="openDialog()">Add Contact</button>
+                                <button mat-button color="primary" (click)="openDialog()">Add Contact</button>
 <div *ngIf="contactsexist">
                    
         <mat-table #table [dataSource]="contactsData">
@@ -174,11 +204,31 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef> Id. </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <span>{{element.id}}</span>
-                        <button mat-button color="primary" (click)="deleteContact(element.id)">delete</button>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-button color="accent" (click)="deleteContact(element.id)"><mat-icon>delete</mat-icon></button>
+                        <button *ngIf="element.cid" mat-button color="primary" (click)="activatePresentationTab()">Presenter</button>
                     </mat-cell>
                 </ng-container>
-         
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="contacttype">
+                                <mat-header-cell *matHeaderCellDef> Contact Type </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                        <mat-form-field>
+                                                <span matPrefix>Role:&nbsp;</span>
+                                                <mat-select floatLabel="never" [(ngModel)]="element.contacttype"  (ngModelChange)="updateContact(element)">                                                                                                
+                                                 
+                                                  <mat-option value="Exhibitor">Exhibitor</mat-option>  
+                                                 
+                                                  <mat-option value="Marketing">Marketing</mat-option>                                                  
+                                                </mat-select>
+                                              </mat-form-field>
+                                              
+                                    <mat-form-field floatLabel="never">                                        
+                                        <input matInput [value]="element.contacttype" >
+                                    </mat-form-field>
+                                </mat-cell>
+                            </ng-container>
                 <!-- Name Column -->
                 <ng-container matColumnDef="contactname">
                     <mat-header-cell *matHeaderCellDef> Contact Name </mat-header-cell>
@@ -216,6 +266,8 @@
                     <mat-cell *matCellDef="let element">
                         <mat-form-field floatLabel="never">
                             <input matInput (change)="updateContact(element)"  placeholder="Phone" [value]="element.phone" [(ngModel)]="element.phone">
+                          
+                            
                         </mat-form-field>
                     </mat-cell>
                 </ng-container>
@@ -225,20 +277,13 @@
                         <mat-header-cell *matHeaderCellDef> Ext </mat-header-cell>
                         <mat-cell *matCellDef="let element">
                             <mat-form-field floatLabel="never">
+                                <span matPrefix>ext.&nbsp;</span>
                                 <input matInput (change)="updateContact(element)" placeholder="Ext" [value]="element.ext" [(ngModel)]="element.ext">
                             </mat-form-field>
                         </mat-cell>
                     </ng-container>
 
-                       <!-- Symbol Column -->
-                  <ng-container matColumnDef="contacttype">
-                        <mat-header-cell *matHeaderCellDef> Contact Type </mat-header-cell>
-                        <mat-cell *matCellDef="let element">
-                            <mat-form-field floatLabel="never">
-                                <input matInput (change)="updateContact(element)" placeholder="Type" [value]="element.contacttype" [(ngModel)]="element.contacttype">
-                            </mat-form-field>
-                        </mat-cell>
-                    </ng-container>
+               
                              <!-- Symbol Column -->
           
         
@@ -306,7 +351,7 @@
                             </mat-card-content>
                         </mat-card>
               
-
+    </div>
   </mat-tab>
  
 <mat-tab label="Exhibitor Badges">
@@ -397,45 +442,189 @@
 </mat-table>
 </div>
   </mat-tab>
-  <mat-tab *ngIf="presentationData" label="Presentation">
-      <p>Tips:  Please keep in mind that your presentation is one hour long.  When creating your presentation, you may want to practice and leave time to take a few questions.
-          You may choose to provide some "takeaway" materials to further whatever your presentation or for following up with unanswered questions after the presentation.
-      </p>
-      <p>The following will be on hand the day of your presentation</p>
-    <p>Please provide details of your presentation.</p>
-    
-    <div *ngFor="let presentation of presentationData;">
-        <table class="table table-condensed">
-            <tr>
-                <td>Your Presentation begins at:</td>
-                <td> <input matInput placeholder="Presentation Time" value="{{presentation.duration}}">
-                    <p class="mat-caption">You will be presenting for one hour starting at the above time.</p>
-                </td>
-            </tr>
-            <tr>
-                <td>Presentation Title</td>
-                <td>   <input matInput (change)="updatePresentation(presentation)" placeholder="Presentation Title" value="{{presentation.title}}" [(ngModel)]="presentation.title"/><br/>    
-                    <p class="mat-caption">Put a description here of how to name the title.</p>
-                </td>
-            </tr>
-            <tr>
-                <td>Description</td>
-                <td>     <input matInput (change)="updatePresentation(presentation)" placeholder="Presentation Marketing Description" value="{{presentation.description}}" [(ngModel)]="presentation.description"/><br/>
-       <p class="mat-caption">Please provide a description that we can use to promote your presentation in our marketing materials.</p>
-                    </td>
-            </tr>
-         
-            </table>
-      </div>
-        
   
+  <mat-tab *ngIf="presentationData" label="Presentation">
+  
+    <div class="row p-3" id="presentationDetails" *ngFor="let presentation of presentationData;">
+        <div class="col-md-2 offset-1">
+        <mat-card>
+            <mat-card-title>Instructions</mat-card-title>
+            <mat-card-content>
+                <div class="alert alert-secondary">
+                    <p><strong>Presentation Timing</strong><br/>
+                    You have 30 minutes for the entire duration.  
+                    We recommend your presentation allow for a question and answer period.
+                    Ideally, a presentation of about 15-20 minutes would be ideal.</p>
+                    <p><strong>Presentation Goals</strong><br/>
+                        The goal of your presentation should be to present a solution to a common problem our customers face; and how your product or service can overcome.</p>
+                    <p><strong>Presentation Materials</strong><br/>
+                     The presentation should include a slideshow / computer presentation and or verbal communication.</p>
+                 </div>
+            </mat-card-content>
+        </mat-card>
+        </div>
+        <div class="col-md-5">
+        <mat-card>
+            <mat-card-title>Presentation</mat-card-title>
+            <mat-card-content>
+                    
+            <div >
+                    <table class="table table-condensed">
+                        <tr>
+                            <td>Your Presentation begins at:</td>
+                            <td>
+                                <mat-form-field floatLabel="never" class="input-full-width">
+                                    <mat-label>Time</mat-label>
+                                    <input matInput color="primary" placeholder="Presentation Time" value="{{presentation.duration}}">                                   
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Presenter</td>
+                            <td>
+                                <mat-form-field floatLabel="never" class="input-full-width">
+                                    <mat-label>Presenter</mat-label>                                    
+                                    <mat-select floatLabel="never" class="pselect" [(ngModel)]="presentation.cid" (ngModelChange)="updatePresentation(presentation)">                                                                                                
+                                        <mat-option value="{{presenter.id}}" *ngFor="let presenter of presenters">
+                                            {{presenter.contactname }} 
+                                        </mat-option>
+                                    </mat-select>
+                                <mat-hint>(Designated Presenter, name and title)</mat-hint>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Presentation Title</td>
+                            <td>
+                                <mat-form-field floatLabel="never" class="input-full-width">
+                                    <mat-label>Title</mat-label>
+                                    <input color="primary" matInput (change)="updatePresentation(presentation)" placeholder="Presentation Title" value="{{presentation.title}}" [(ngModel)]="presentation.title"/><br/>    
+                                    <mat-hint>eg.  Having trouble with your splay lines?  Hear about our innovative solutions to resolve this for you.</mat-hint>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>
+                                <mat-form-field floatLabel="never" class="input-full-width">
+                                    <mat-label>Description</mat-label>
+                                <textarea matInput 
+                                (change)="updatePresentation(presentation)"
+                                placeholder="Presentation Marketing Description" 
+                                [value]="presentation.description" 
+                                [(ngModel)]="presentation.description"
+                                cdkTextareaAutosize
+                                #autosize="cdkTextareaAutosize"
+                                cdkAutosizeMinRows="2" 
+                                cdkAutosizeMaxRows="7"
+                                color="primary"></textarea>
+                                <mat-hint>A summary of your presentation for marketing purposes.</mat-hint>
+                                    </mat-form-field>
+                                </td>
+                        </tr>
+                    
+                        </table>
+                
+                </div>
+            </mat-card-content>
+        </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card>
+                <mat-card-title>Presenter Image</mat-card-title>
+                <mat-card-content>
+                    <div class="row">
+                      
+                        <div class="col-md-6">
+                            <img class="img-circle img-responsive img-thumbnail" [ngModel]="presentation.presenter_image" src="{{presentation.presenter_image}}">
+                            <p><small>{{presentation.contactname}}</small></p>
+                        </div>
+                        <div class="col-md-4">
+                                <app-matupload (complete)="onPresentationImageUpload($event)"></app-matupload>  
+                            </div>
+                    </div>
+                   </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
   </mat-tab>
-  <mat-tab label="Venue">
-      Venue
-    <p>Put hotel information here, maps, phone numbers, booking information</p>
-    <p>Put Presentation Time Slot for this Exhibitor Here</p>
-    <p></p>
+  <mat-tab label="Venue and Announcements">
+   <mat-card>
+       <mat-card-title>Venue</mat-card-title>
+       <mat-card-content>
+           <div clas="col-md-10 offset-1">
+                <ol>
+                    <li>Venue Details with Map</li>
+                    <li>Links to Hotel Booking</li>
+                    <li>Sign-up forms for AceConnex RElated Exhibitor Events (private dinner)!</li>
+                </ol>
+           </div>
+       </mat-card-content>
+       </mat-card>
+    
     </mat-tab>
+<mat-tab label="Marketing">
+    
+    <div class="col-md-10 offset-1">
+        <mat-card class="m-3">
+            <mat-card-title>Marketing Tools</mat-card-title>
+            <mat-card-content>
+                <mat-tab-group>
+                <mat-tab label="logos" style="color:#333333;">
+                        <img src="images/aceconnex-logo.png" alt="AceConnex Logo"/>
+                </mat-tab>
+                <mat-tab label="content">
+                    <mat-card>
+                        <p>AceConnex connects you to industry manufacturers and service suppliers with a focus on providing solutions to your most challenging plastics molding issues.</p>
+                        <p>Many of you are dealing with daily breakdowns and maintenance related issues stemming from a variety of areas, i.e. water flow, cleaning, purging, temperature control, insulation / heat loss, pressure build-up, cable / wiring hook-ups, and scrap materials – to name a few.</p>
+                        <p>AceConnex brought together both industry and supplier to resolve your day-to-day problems.</p>
+                        <p>To register for AceConnex visit aceconnex.com</p>
+                    </mat-card>
+                </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+
+    <mat-card class="m-3">
+        <mat-card-title>Marketing Initiatives</mat-card-title>
+        <mat-card-content>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="alert alert-secondary">
+                We ask for your commitment to advertising our event.  
+                Here's our marketing data.
+
+                put logos for them to download
+                put "blurbs for advertising purposes."
+
+                put a form where they let us know what the publication will be and the date of publication
+                <p>Please provide us w2ith a list of publications you will be advertising in</p>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <table>
+                    <tr>
+                    <td><mat-form-field floatLabel="never" class="input-full-width">
+                        <mat-label>Publication</mat-label>
+                        <input matInput value="">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                            <mat-form-field floatLabel="never" class="input-full-width">
+                            <mat-label>Date of Publish</mat-label>
+                            <input matInput value="">
+                            </mat-form-field>
+                    </td>
+                    </tr>
+                    </table>
+            </div>
+        </div>
+        </mat-card-content>
+    </mat-card>
+  
+  </div>
+
+</mat-tab>
 </mat-tab-group>
 
 

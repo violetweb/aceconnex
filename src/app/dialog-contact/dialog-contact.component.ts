@@ -13,13 +13,14 @@ export class DialogContactComponent {
 
   action;
   local_data: any;
+  firstfield;
 
   constructor(
     public dialogRef: MatDialogRef<DialogContactComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       this.local_data =  data;
       this.action = this.local_data.action;
-
+       
     }
 
   onNoClick(): void {
